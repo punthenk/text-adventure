@@ -3,13 +3,12 @@
 #include "Command.h"
 #include "CommandType.h"
 
-Game::Game() {
-}
+Game::Game() { }
 
 void Game::play() {
     bool finished = false;
 
-    while (!finished && player.isAlive) {
+    while (!finished && player.isAlive()) {
         Command command = parser.getCommand();
         finished = processCommand(command);
     }

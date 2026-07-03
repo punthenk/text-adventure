@@ -2,6 +2,7 @@
 
 #include "Parser.h"
 #include "Command.h"
+#include "Player.h"
 
 class Game {
 public:
@@ -10,11 +11,6 @@ public:
 
 private:
     Parser parser;
-    struct Player {
-        int health = 100;
-        bool isAlive = true;
-        int backpackSpace;
-    };
     Player player;
 
     bool processCommand(Command command);
