@@ -1,15 +1,28 @@
 #include "CommandLibrary.h"
-#include <algorithm>
 #include <string>
-#include <vector>
 
 using std::string;
 
 CommandLibrary::CommandLibrary() {
-    validCommands.push_back("help");
-    validCommands.push_back("quit");
+    // Main first commands
+    valid_commands["help"] = CommandType::Help;
+
+    // Quit
+    valid_commands["quit"] = CommandType::Quit;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {
-    return std::binary_search(validCommands.begin(), validCommands.end(), command);
+    const auto map_index = valid_commands.find(command);
+    if (map_index != valid_commands.end()) {
+        return true;
+    }
+    return false;
+}
+
+CommandType CommandLibrary::getCommandType(const string& word) {
+    const auto map_index = valid_commands.find(word);
+    if (map_index != valid_commands.end()) {
+        return valid_commands[word];
+    }
+    return CommandType::Unknown;
 }

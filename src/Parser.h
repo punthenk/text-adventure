@@ -8,8 +8,7 @@ class Parser {
 public:
     Parser();
     Command getCommand();
-    void printValidCommands();
 
 private:
-    const CommandLibrary commandLibrary;
+    CommandLibrary commandLibrary;
 };

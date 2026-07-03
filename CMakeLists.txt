@@ -7,6 +7,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 add_executable(game 
     src/main.cpp
     src/Command.cpp
-        src/CommandLibrary.cpp
+    src/CommandLibrary.cpp
     src/Parser.cpp
+    src/Game.cpp
 )

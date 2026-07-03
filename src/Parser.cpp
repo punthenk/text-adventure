@@ -1,9 +1,9 @@
 #include "Parser.h"
 #include "Command.h"
-#include <cstddef>
 #include <iostream>
 #include <string>
 #include <vector>
+#include "CommandType.h"
 
 using std::string;
 
@@ -12,26 +12,31 @@ Parser::Parser() { }
 Command Parser::getCommand() {
     std::cout << "> "; 
 
-    string inputWord1;
-    string delimiter = " ";
+    const string delimiter = " ";
 
     string input;
     string words;
-    std::cin >> input;
+    std::getline(std::cin, input);
 
-    std::vector<string> result;
-    if (input.empty()) 
-        return *new Command("");
- 
-    size_t pos = 0;
-    size_t lpos = 0;
-    auto dlen = delimiter.length();
-    
-    while ((pos = input.find(delimiter, lpos)) != string::npos) {
-        result.push_back(input.substr(lpos, pos - lpos));
-        lpos = pos + dlen;
+    std::vector<string> command_strings;
+    std::vector<CommandType> commands;
+
+    if (input.empty()) {
+        return Command({CommandType::Unknown});
     }
 
-    result.push_back(input.substr(lpos, input.length()));
-    return *new Command(result[0]);
+    size_t pos = 0;
+
+    while ((pos = input.find(delimiter)) != string::npos) {
+        command_strings.push_back(input.substr(0, pos));
+        input.erase(0, pos + 1);
+    }
+
+    command_strings.push_back(input);
+
+    for (const string& word : command_strings) {
+        commands.push_back(commandLibrary.getCommandType(word));
+    }
+
+    return Command(commands);
 }

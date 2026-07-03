@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vector>
-#include <string> 
+#include "CommandType.h"
+#include <map>
+#include <string>
 
 using std::string;
 
@@ -9,8 +10,8 @@ class CommandLibrary {
 public:
     CommandLibrary();
     bool isValidCommandWord(string command);
-    string getCommands();
+    CommandType getCommandType(const string& word);
 
 private:
-    std::vector<string> validCommands;
+    std::map<string, CommandType> valid_commands;
 };
