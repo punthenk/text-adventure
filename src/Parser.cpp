@@ -40,3 +40,8 @@ Command Parser::getCommand() {
 
     return Command(commands);
 }
+
+void Parser::printValidCommands() {
+    std::cout << "You commands are:" << std::endl;
+    std::cout << commandLibrary.getCommandsString() << std::endl;
+}

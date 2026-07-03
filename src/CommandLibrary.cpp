@@ -1,5 +1,7 @@
 #include "CommandLibrary.h"
+#include <sstream>
 #include <string>
+
 
 using std::string;
 
@@ -25,4 +27,17 @@ CommandType CommandLibrary::getCommandType(const string& word) {
         return valid_commands[word];
     }
     return CommandType::Unknown;
+}
+
+string CommandLibrary::getCommandsString() {
+    std::ostringstream commands;
+    bool first = true;
+    for (const auto& [key, value] : valid_commands) {
+        if (!first)
+            commands << ", ";
+
+        commands << key;
+        first = false;
+    }
+    return commands.str();
 }

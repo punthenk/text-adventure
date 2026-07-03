@@ -11,6 +11,7 @@ public:
     CommandLibrary();
     bool isValidCommandWord(string command);
     CommandType getCommandType(const string& word);
+    string getCommandsString();
 
 private:
     std::map<string, CommandType> valid_commands;

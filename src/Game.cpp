@@ -18,6 +18,7 @@ void Game::play() {
 
 void Game::printHelp() {
     std::cout << "Here is you help!" << std::endl;
+    parser.printValidCommands();
 }
 
 bool Game::processCommand(Command command) {
