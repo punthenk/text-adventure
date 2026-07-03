@@ -3,9 +3,9 @@
 class Player {
 public:
     Player();
-    int getBackpackSpace() const;
-    int getHealth() const;
-    bool isAlive() const;
+    int getBackpackSpace();
+    int getHealth();
+    bool isAlive();
 
 private:
     int backpack_space;

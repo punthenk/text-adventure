@@ -20,12 +20,21 @@ void Game::printHelp() {
     parser.printValidCommands();
 }
 
+void Game::status() {
+    std::cout << "Your health is " << player.getHealth() << "/100" << std::endl;
+    std::cout << "----------------------" << std::endl;
+}
+
 bool Game::processCommand(Command command) {
     bool wantToQuit = false;
 
     switch (command.command_word) {
         case CommandType::Help: {
             printHelp();
+            break;
+        }
+        case CommandType::Status: {
+            status();
             break;
         }
         case CommandType::Quit: {

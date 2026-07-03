@@ -8,6 +8,7 @@ using std::string;
 CommandLibrary::CommandLibrary() {
     // Main first commands
     valid_commands["help"] = CommandType::Help;
+    valid_commands["status"] = CommandType::Status;
 
     // Quit
     valid_commands["quit"] = CommandType::Quit;

@@ -5,14 +5,14 @@ Player::Player() {
     backpack_space = 20;
 }
 
-int Player::getBackpackSpace() const {
+int Player::getBackpackSpace() {
     return backpack_space;
 }
 
-int Player::getHealth() const {
+int Player::getHealth() {
     return health;
 }
 
-bool Player::isAlive() const {
+bool Player::isAlive() {
     return health >= 0;
 }

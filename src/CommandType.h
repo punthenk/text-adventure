@@ -6,5 +6,6 @@
 enum class CommandType {
     Help,
     Quit,
+    Status,
     Unknown,
 };
