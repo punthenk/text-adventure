@@ -20,12 +20,16 @@ string Room::getLongDescription() {
     return str;
 }
 
-std::optional<Room> Room::getExit(const string& direction) {
+void Room::addExit(const string &direction, Room* neighbor) {
+    exits[direction] = neighbor;
+}
+
+Room* Room::getExit(const string& direction) {
     const auto it = exits.find(direction);
     if (it != exits.end()) {
         return it->second;
     }
-    return std::nullopt;
+    return nullptr;
 }
 
 string Room::getExitString() {

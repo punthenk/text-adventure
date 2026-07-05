@@ -3,7 +3,9 @@
 #include "Command.h"
 #include "CommandType.h"
 
-Game::Game() { }
+Game::Game() {
+    createRooms();
+}
 
 void Game::play() {
     bool finished = false;
@@ -26,9 +28,12 @@ void Game::status() {
 }
 
 void Game::createRooms() {
-    Room outside = Room("outside the main entrance of the garage", false);
+    Room* outside = new Room("outside the main entrance of the garage", false);
+    Room* hallway = new Room("inside the hallway of the garage", false);
+    outside->addExit("north", hallway);
+    hallway->addExit("south", outside);
 
-    player.currentRoom = &outside;
+    player.currentRoom = outside;
 }
 
 bool Game::processCommand(Command command) {

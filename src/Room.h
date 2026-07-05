@@ -10,12 +10,12 @@ public:
     bool getIsLocked();
     string getShortDescription();
     string getLongDescription();
-    void AddExit(string direction, Room neighbor);
-    std::optional<Room> getExit(const string &direction);
+    void addExit(const string &direction, Room* neighbor);
+    Room* getExit(const string &direction);
     string getExitString();
 
 private:
     string description;
-    std::map<string, Room> exits;
+    std::map<string, Room*> exits;
     bool isLocked = false;
 };
