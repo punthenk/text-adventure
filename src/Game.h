@@ -16,5 +16,7 @@ private:
     bool processCommand(Command command);
     void printHelp();
     void status();
+    void look();
+
     void createRooms();
 };

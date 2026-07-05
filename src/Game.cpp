@@ -27,6 +27,10 @@ void Game::status() {
     std::cout << "----------------------" << std::endl;
 }
 
+void Game::look() {
+    std::cout << player.currentRoom->getLongDescription() << std::endl;
+}
+
 void Game::createRooms() {
     Room* outside = new Room("outside the main entrance of the garage", false);
     Room* hallway = new Room("inside the hallway of the garage", false);
@@ -46,6 +50,10 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Status: {
             status();
+            break;
+        }
+        case CommandType::Look: {
+            look();
             break;
         }
         case CommandType::Quit: {

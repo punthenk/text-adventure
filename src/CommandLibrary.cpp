@@ -9,6 +9,7 @@ CommandLibrary::CommandLibrary() {
     // Main first commands
     valid_commands["help"] = CommandType::Help;
     valid_commands["status"] = CommandType::Status;
+    valid_commands["look"] = CommandType::Look;
 
     // Quit
     valid_commands["quit"] = CommandType::Quit;
