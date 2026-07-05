@@ -1,4 +1,5 @@
 #pragma once
+#include "Room.h"
 
 class Player {
 public:
@@ -6,6 +7,7 @@ public:
     int getBackpackSpace();
     int getHealth();
     bool isAlive();
+    Room* currentRoom;
 
 private:
     int backpack_space;

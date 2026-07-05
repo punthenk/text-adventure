@@ -11,4 +11,5 @@ add_executable(game
     src/Parser.cpp
     src/Game.cpp
     src/Player.cpp
+    src/Room.cpp
 )

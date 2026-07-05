@@ -25,6 +25,12 @@ void Game::status() {
     std::cout << "----------------------" << std::endl;
 }
 
+void Game::createRooms() {
+    Room outside = Room("outside the main entrance of the garage", false);
+
+    player.currentRoom = &outside;
+}
+
 bool Game::processCommand(Command command) {
     bool wantToQuit = false;
 
