@@ -8,9 +8,9 @@ using std::string;
 
 class Command {
 public:
-    Command(const std::vector<CommandType>& commands);
-    CommandType command_word;
-    CommandType second_word;
-    CommandType third_word;
+    CommandType type = CommandType::Unknown;
+    Direction direction = Direction::NotSet;
     bool isUnknown(CommandType command) const;
+    bool hasDirection();
+    bool hasValidDirection();
 };

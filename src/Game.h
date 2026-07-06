@@ -17,6 +17,7 @@ private:
     void printHelp();
     void status();
     void look();
+    void goRoom(Command command);
 
     void createRooms();
 };

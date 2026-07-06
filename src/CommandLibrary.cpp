@@ -6,13 +6,18 @@
 using std::string;
 
 CommandLibrary::CommandLibrary() {
-    // Main first commands
+    // Commands
     valid_commands["help"] = CommandType::Help;
     valid_commands["status"] = CommandType::Status;
     valid_commands["look"] = CommandType::Look;
-
-    // Quit
+    valid_commands["go"] = CommandType::Go;
     valid_commands["quit"] = CommandType::Quit;
+
+    // Directions
+    valid_directions["north"] = Direction::North;
+    valid_directions["east"] = Direction::East;
+    valid_directions["south"] = Direction::South;
+    valid_directions["west"] = Direction::West;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {
@@ -23,12 +28,12 @@ bool CommandLibrary::isValidCommandWord(string command) {
     return false;
 }
 
-CommandType CommandLibrary::getCommandType(const string& word) {
-    const auto map_index = valid_commands.find(word);
-    if (map_index != valid_commands.end()) {
-        return valid_commands[word];
+bool CommandLibrary::isValidDirection(string command) {
+    const auto it = valid_directions.find(command);
+    if (it != valid_directions.end()) {
+        return true;
     }
-    return CommandType::Unknown;
+    return false;
 }
 
 string CommandLibrary::getCommandsString() {
@@ -42,4 +47,12 @@ string CommandLibrary::getCommandsString() {
         first = false;
     }
     return commands.str();
+}
+
+std::map<string, CommandType> CommandLibrary::getValidCommands() const {
+    return valid_commands;
+}
+
+std::map<string, Direction> CommandLibrary::getValidDirections() const {
+    return valid_directions;
 }

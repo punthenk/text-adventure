@@ -11,5 +11,5 @@ public:
     void printValidCommands();
 
 private:
-    CommandLibrary commandLibrary;
+    CommandLibrary command_library;
 };

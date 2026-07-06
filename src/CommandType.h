@@ -8,5 +8,15 @@ enum class CommandType {
     Quit,
     Status,
     Look,
+    Go,
     Unknown,
+};
+
+enum class Direction {
+    North,
+    East,
+    South,
+    West,
+    Unknown,
+    NotSet
 };

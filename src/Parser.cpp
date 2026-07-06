@@ -19,7 +19,7 @@ Command Parser::getCommand() {
     std::getline(std::cin, input);
 
     std::vector<string> command_strings;
-    std::vector<CommandType> commands;
+    Command command;
 
     if (input.empty()) {
         return Command({CommandType::Unknown});
@@ -34,14 +34,20 @@ Command Parser::getCommand() {
 
     command_strings.push_back(input);
 
-    for (const string& word : command_strings) {
-        commands.push_back(commandLibrary.getCommandType(word));
+    command.type = command_library.lookup(command_library.getValidCommands(), command_strings[0], CommandType::Unknown);
+    switch (command.type) {
+        case CommandType::Go: {
+            command.direction = command_library.lookup(command_library.getValidDirections(), command_strings[1], Direction::NotSet);
+            break;
+        }
+        default:
+            break;
     }
 
-    return Command(commands);
+    return command;
 }
 
 void Parser::printValidCommands() {
     std::cout << "You commands are:" << std::endl;
-    std::cout << commandLibrary.getCommandsString() << std::endl;
+    std::cout << command_library.getCommandsString() << std::endl;
 }

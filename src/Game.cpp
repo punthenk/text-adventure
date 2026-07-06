@@ -31,6 +31,17 @@ void Game::look() {
     std::cout << player.currentRoom->getLongDescription() << std::endl;
 }
 
+void Game::goRoom(Command command) {
+    if (!command.hasDirection()) {
+        std::cout << "Go where?" << std::endl;
+        return;
+    } else if (!command.hasValidDirection()) {
+        std::cout << "That is not a valid direction!" << std::endl;
+    }
+
+    Direction dir = command.direction;
+}
+
 void Game::createRooms() {
     Room* outside = new Room("outside the main entrance of the garage", false);
     Room* hallway = new Room("inside the hallway of the garage", false);
@@ -43,7 +54,7 @@ void Game::createRooms() {
 bool Game::processCommand(Command command) {
     bool wantToQuit = false;
 
-    switch (command.command_word) {
+    switch (command.type) {
         case CommandType::Help: {
             printHelp();
             break;
@@ -58,6 +69,10 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Quit: {
             wantToQuit = true;
+            break;
+        }
+        case CommandType::Go: {
+            goRoom(command);
             break;
         }
         case CommandType::Unknown: {
