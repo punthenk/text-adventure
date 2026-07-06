@@ -28,7 +28,7 @@ void Game::status() {
 }
 
 void Game::look() {
-    std::cout << player.currentRoom->getLongDescription() << std::endl;
+    std::cout << player.current_room->getLongDescription() << std::endl;
 }
 
 void Game::goRoom(Command command) {
@@ -37,18 +37,32 @@ void Game::goRoom(Command command) {
         return;
     } else if (!command.hasValidDirection()) {
         std::cout << "That is not a valid direction!" << std::endl;
+        return;
     }
 
     Direction dir = command.direction;
+
+    Room* next_room = player.current_room->getExit(dir);
+    if (next_room == nullptr) {
+        std::cout << "There is not exit found in that direction!" << std::endl;
+        return;
+    }
+
+    if (!next_room->getIsLocked()) {
+        player.current_room = next_room;
+        std::cout << player.current_room->getLongDescription() << std::endl;
+    } else {
+        std::cout << "The room you want to enter is locked" << std::endl;
+    }
 }
 
 void Game::createRooms() {
     Room* outside = new Room("outside the main entrance of the garage", false);
     Room* hallway = new Room("inside the hallway of the garage", false);
-    outside->addExit("north", hallway);
-    hallway->addExit("south", outside);
+    outside->addExit(Direction::North, hallway);
+    hallway->addExit(Direction::South, outside);
 
-    player.currentRoom = outside;
+    player.current_room = outside;
 }
 
 bool Game::processCommand(Command command) {

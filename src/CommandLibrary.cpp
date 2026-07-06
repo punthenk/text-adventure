@@ -49,6 +49,18 @@ string CommandLibrary::getCommandsString() {
     return commands.str();
 }
 
+string CommandLibrary::directionToString(Direction direction) {
+    switch (direction) {
+        case Direction::North: return "north";
+        case Direction::East: return "east";
+        case Direction::South: return "south";
+        case Direction::West: return "west";
+        case Direction::Unknown: return "unknown";
+        case Direction::NotSet: return "unknown";
+    }
+    return "unknown";
+}
+
 std::map<string, CommandType> CommandLibrary::getValidCommands() const {
     return valid_commands;
 }

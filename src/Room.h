@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include <string>
+#include "CommandType.h"
 
 using std::string;
 
@@ -10,12 +11,12 @@ public:
     bool getIsLocked();
     string getShortDescription();
     string getLongDescription();
-    void addExit(const string &direction, Room* neighbor);
-    Room* getExit(const string &direction);
+    void addExit(const Direction &direction, Room* neighbor);
+    Room* getExit(const Direction &direction);
     string getExitString();
 
 private:
     string description;
-    std::map<string, Room*> exits;
+    std::map<Direction, Room*> exits;
     bool isLocked = false;
 };

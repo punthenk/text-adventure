@@ -7,7 +7,7 @@ public:
     int getBackpackSpace();
     int getHealth();
     bool isAlive();
-    Room* currentRoom;
+    Room* current_room;
 
 private:
     int backpack_space;

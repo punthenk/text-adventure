@@ -3,7 +3,7 @@
 Player::Player() {
     health = 100;
     backpack_space = 20;
-    currentRoom = nullptr;
+    current_room = nullptr;
 }
 
 int Player::getBackpackSpace() {

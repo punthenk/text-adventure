@@ -1,4 +1,6 @@
 #include "Room.h"
+#include "CommandLibrary.h"
+#include "CommandType.h"
 
 Room::Room(string desc, bool roomIsLocked) {
     description = desc;
@@ -20,11 +22,11 @@ string Room::getLongDescription() {
     return str;
 }
 
-void Room::addExit(const string &direction, Room* neighbor) {
+void Room::addExit(const Direction &direction, Room* neighbor) {
     exits[direction] = neighbor;
 }
 
-Room* Room::getExit(const string& direction) {
+Room* Room::getExit(const Direction& direction) {
     const auto it = exits.find(direction);
     if (it != exits.end()) {
         return it->second;
@@ -38,7 +40,7 @@ string Room::getExitString() {
     for (const auto& [key, value] : exits) {
         if (!first)
             str += ", ";
-        str += key;
+        str += CommandLibrary::directionToString(key);
         first = false;
     }
     return str;

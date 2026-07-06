@@ -14,6 +14,8 @@ public:
 
     string getCommandsString();
 
+    static string directionToString(Direction direction);
+
     template<typename EnumType>
     EnumType lookup(const std::map<string, EnumType> &table, const string &word, EnumType fallback) {
         if (word.empty())
