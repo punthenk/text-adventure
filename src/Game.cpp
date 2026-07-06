@@ -3,6 +3,7 @@
 #include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
+#include "MapView.h"
 
 Game::Game() {
     createRooms();
@@ -60,8 +61,15 @@ void Game::goRoom(Command command) {
 void Game::createRooms() {
     Room* outside = new Room("outside the main entrance of the garage", false);
     Room* hallway = new Room("inside the hallway of the garage", false);
+    Room* break_room = new Room("inside the break room of the garage", false);
+    Room* garage = new Room("inside the main garage", false);
+
     outside->addExit(Direction::North, hallway);
     hallway->addExit(Direction::South, outside);
+    hallway->addExit(Direction::West, break_room);
+    break_room->addExit(Direction::East, hallway);
+    hallway->addExit(Direction::North, garage);
+    garage->addExit(Direction::South, hallway);
 
     player.current_room = outside;
 }
@@ -91,10 +99,8 @@ bool Game::processCommand(Command command) {
             break;
         }
         case CommandType::Map: {
-            Canvas c(10, 5);
-            c.setChar(2, 2, '#');
-            c.setChar(5, 1, '#');
-            std::cout << c.render();
+            MapView map_view(player.current_room);
+            map_view.draw();
             break;
         }
         case CommandType::Unknown: {

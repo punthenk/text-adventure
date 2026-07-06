@@ -2,14 +2,25 @@
 
 #include <map>
 #include <utility>
+#include <set>
+#include "Canvas.h"
 #include "CommandType.h"
 #include "Room.h"
 
+struct Bounds {
+    int minX, maxX, minY, maxY;
+};
+
 class MapView {
 public:
-    MapView();
-    std::pair<int, int> directionToOffset(Direction dir);
-    void calculatePositions(Room* room, int x, int y, std::map<Room*, std::pair<int, int>>& positions, std::set<Room*>& visited);
+    MapView(Room* current_room);
+    void draw();
 
 private:
+    Room* start_room;
+    void calculatePositions(Room *room, int x, int y, std::map<Room *, std::pair<int, int>> &positions,
+                            std::set<Room*> &visited);
+    Bounds calculateBounds(const std::map<Room *, std::pair<int, int> > &positions);
+    Canvas buildCanvas(const std::map<Room *, std::pair<int, int> > &positions);
+    std::pair<int, int> directionToOffset(Direction dir);
 };
