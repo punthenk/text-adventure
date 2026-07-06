@@ -9,6 +9,7 @@ enum class CommandType {
     Status,
     Look,
     Go,
+    Map,
     Unknown,
 };
 

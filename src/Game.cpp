@@ -1,5 +1,6 @@
 #include "Game.h"
 #include <iostream>
+#include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
 
@@ -87,6 +88,13 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Go: {
             goRoom(command);
+            break;
+        }
+        case CommandType::Map: {
+            Canvas c(10, 5);
+            c.setChar(2, 2, '#');
+            c.setChar(5, 1, '#');
+            std::cout << c.render();
             break;
         }
         case CommandType::Unknown: {

@@ -13,4 +13,5 @@ add_executable(game
     src/Player.cpp
     src/Room.cpp
     src/MapView.cpp
+    src/Canvas.cpp
 )

@@ -11,6 +11,7 @@ CommandLibrary::CommandLibrary() {
     valid_commands["status"] = CommandType::Status;
     valid_commands["look"] = CommandType::Look;
     valid_commands["go"] = CommandType::Go;
+    valid_commands["map"] = CommandType::Map;
     valid_commands["quit"] = CommandType::Quit;
 
     // Directions
