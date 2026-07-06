@@ -45,3 +45,7 @@ string Room::getExitString() {
     }
     return str;
 }
+
+std::map<Direction, Room *> & Room::getExits() {
+    return exits;
+}

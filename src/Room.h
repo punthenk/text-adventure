@@ -14,6 +14,7 @@ public:
     void addExit(const Direction &direction, Room* neighbor);
     Room* getExit(const Direction &direction);
     string getExitString();
+    std::map<Direction, Room*>& getExits();
 
 private:
     string description;
