@@ -17,3 +17,8 @@ int Player::getHealth() {
 bool Player::isAlive() {
     return health >= 0;
 }
+
+void Player::setCurrentRoom(Room *room) {
+    current_room = room;
+    current_room->markVisited();
+}

@@ -7,6 +7,7 @@ public:
     int getBackpackSpace();
     int getHealth();
     bool isAlive();
+    void setCurrentRoom(Room* room);
     Room* current_room;
 
 private:

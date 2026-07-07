@@ -52,7 +52,7 @@ void Game::goRoom(Command command) {
     }
 
     if (!next_room->getIsLocked()) {
-        player.current_room = next_room;
+        player.setCurrentRoom(next_room);
         std::cout << player.current_room->getLongDescription() << std::endl;
     } else {
         std::cout << "The room you want to enter is locked" << std::endl;
@@ -63,7 +63,7 @@ void Game::createRooms() {
     unsigned int seed = time(nullptr);
     srand(seed);
     MapGenerator map_generator = MapGenerator(seed, 6, 6);
-    player.current_room = map_generator.generate();
+    player.setCurrentRoom(map_generator.generate());
 }
 
 bool Game::processCommand(Command command) {

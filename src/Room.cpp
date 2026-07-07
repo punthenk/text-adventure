@@ -4,11 +4,11 @@
 
 Room::Room(string desc, bool roomIsLocked) {
     description = desc;
-    isLocked = roomIsLocked;
+    is_locked = roomIsLocked;
 }
 
 bool Room::getIsLocked() {
-    return isLocked;
+    return is_locked;
 }
 
 string Room::getShortDescription() {
@@ -48,4 +48,12 @@ string Room::getExitString() {
 
 std::map<Direction, Room *> & Room::getExits() {
     return exits;
+}
+
+void Room::markVisited() {
+    is_visited = true;
+}
+
+bool Room::getIsVisited() const {
+    return is_visited;
 }
