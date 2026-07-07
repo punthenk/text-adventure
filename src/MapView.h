@@ -13,11 +13,11 @@ struct Bounds {
 
 class MapView {
 public:
-    MapView(Room* current_room);
+    MapView(Room* player_current_room);
     void draw();
 
 private:
-    Room* start_room;
+    Room* current_room;
     void calculatePositions(Room *room, int x, int y, std::map<Room *, std::pair<int, int>> &positions,
                             std::set<Room*> &visited);
     Bounds calculateBounds(const std::map<Room *, std::pair<int, int> > &positions);

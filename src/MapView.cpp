@@ -5,14 +5,14 @@
 #include "Canvas.h"
 #include "TerminalRawMode.h"
 
-MapView::MapView(Room* current_room) {
-    start_room = current_room;
+MapView::MapView(Room* player_current_room) {
+    current_room = player_current_room;
 }
 
 void MapView::draw() {
     std::map<Room*, std::pair<int,int>> positions;
     std::set<Room*> visited;
-    calculatePositions(start_room, 0, 0, positions, visited);
+    calculatePositions(current_room, 0, 0, positions, visited);
 
     Canvas canvas = buildCanvas(positions);
 
@@ -80,16 +80,30 @@ Bounds MapView::calculateBounds(const std::map<Room *, std::pair<int, int>> &pos
 Canvas MapView::buildCanvas(const std::map<Room*, std::pair<int,int>>& positions) {
     Bounds bounds = calculateBounds(positions);
 
-    int width  = bounds.maxX - bounds.minX + 1;
-    int height = bounds.maxY - bounds.minY + 1;
+    const int scale = 2;
+
+    int width  = (bounds.maxX - bounds.minX) * scale + 1;
+    int height = (bounds.maxY - bounds.minY) * scale + 1;
 
     Canvas canvas(width, height);
 
     for (const auto& [room, pos] : positions) {
         const auto [gridX, gridY] = pos;
-        const int canvasX = gridX - bounds.minX;
-        const int canvasY = gridY - bounds.minY;
+        const int canvasX = (gridX - bounds.minX) * scale;
+        const int canvasY = (gridY - bounds.minY) * scale;
         canvas.setChar(canvasX, canvasY, '#');
+    }
+
+
+    for (const auto& [room, pos] : positions) {
+        const auto [gridX, gridY] = pos;
+        const int canvasX = (gridX - bounds.minX) * scale;
+        const int canvasY = (gridY - bounds.minY) * scale;
+        for (const auto &[dir, neighbor]: room->getExits()) {
+            auto [dx, dy] = directionToOffset(dir);
+            char line_char = (dx != 0) ? '-' : '|';
+            canvas.setChar(canvasX + dx, canvasY + dy, line_char);
+        }
     }
 
     return canvas;
