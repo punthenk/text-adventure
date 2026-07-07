@@ -15,4 +15,5 @@ add_executable(game
     src/MapView.cpp
     src/Canvas.cpp
     src/TerminalRawMode.cpp
+    src/MapGenerator.cpp
 )

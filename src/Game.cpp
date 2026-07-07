@@ -3,6 +3,7 @@
 #include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
+#include "MapGenerator.h"
 #include "MapView.h"
 
 Game::Game() {
@@ -59,19 +60,10 @@ void Game::goRoom(Command command) {
 }
 
 void Game::createRooms() {
-    Room* outside = new Room("outside the main entrance of the garage", false);
-    Room* hallway = new Room("inside the hallway of the garage", false);
-    Room* break_room = new Room("inside the break room of the garage", false);
-    Room* garage = new Room("inside the main garage", false);
-
-    outside->addExit(Direction::North, hallway);
-    hallway->addExit(Direction::South, outside);
-    hallway->addExit(Direction::West, break_room);
-    break_room->addExit(Direction::East, hallway);
-    hallway->addExit(Direction::North, garage);
-    garage->addExit(Direction::South, hallway);
-
-    player.current_room = outside;
+    unsigned int seed = time(nullptr);
+    srand(seed);
+    MapGenerator map_generator = MapGenerator(seed, 6, 6);
+    player.current_room = map_generator.generate();
 }
 
 bool Game::processCommand(Command command) {

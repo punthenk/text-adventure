@@ -14,7 +14,9 @@ struct Bounds {
 class MapView {
 public:
     MapView(Room* player_current_room);
+    static std::pair<int, int> directionToOffset(Direction dir);
     void draw();
+
 
 private:
     Room* current_room;
@@ -22,5 +24,4 @@ private:
                             std::set<Room*> &visited);
     Bounds calculateBounds(const std::map<Room *, std::pair<int, int> > &positions);
     Canvas buildCanvas(const std::map<Room *, std::pair<int, int> > &positions);
-    std::pair<int, int> directionToOffset(Direction dir);
 };
