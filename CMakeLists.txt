@@ -14,4 +14,5 @@ add_executable(game
     src/Room.cpp
     src/MapView.cpp
     src/Canvas.cpp
+    src/TerminalRawMode.cpp
 )

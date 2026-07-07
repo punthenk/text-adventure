@@ -1,7 +1,9 @@
 #include "MapView.h"
 #include <iostream>
 #include <set>
+#include <unistd.h>
 #include "Canvas.h"
+#include "TerminalRawMode.h"
 
 MapView::MapView(Room* current_room) {
     start_room = current_room;
@@ -13,7 +15,21 @@ void MapView::draw() {
     calculatePositions(start_room, 0, 0, positions, visited);
 
     Canvas canvas = buildCanvas(positions);
+
+    std::cout << "\033[?1049h";
     std::cout << canvas.render();
+    std::cout << "\nPress 'q' to return.";
+    std::cout.flush();
+    {
+        TerminalRawMode raw;
+        char input;
+        while (true) {
+            read(STDIN_FILENO, &input, 1);
+            if (input == 'q')
+                break;
+        }
+    }
+    std::cout << "\033[?1049l";
 }
 
 std::pair<int, int> MapView::directionToOffset(Direction dir) {
@@ -70,9 +86,9 @@ Canvas MapView::buildCanvas(const std::map<Room*, std::pair<int,int>>& positions
     Canvas canvas(width, height);
 
     for (const auto& [room, pos] : positions) {
-        auto [gridX, gridY] = pos;
-        int canvasX = gridX - bounds.minX;
-        int canvasY = gridY - bounds.minY;
+        const auto [gridX, gridY] = pos;
+        const int canvasX = gridX - bounds.minX;
+        const int canvasY = gridY - bounds.minY;
         canvas.setChar(canvasX, canvasY, '#');
     }
 
