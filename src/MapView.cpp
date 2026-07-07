@@ -91,7 +91,11 @@ Canvas MapView::buildCanvas(const std::map<Room*, std::pair<int,int>>& positions
         const auto [gridX, gridY] = pos;
         const int canvasX = (gridX - bounds.minX) * scale;
         const int canvasY = (gridY - bounds.minY) * scale;
-        canvas.setChar(canvasX, canvasY, '#');
+        if (current_room == room) {
+            canvas.setChar(canvasX, canvasY, '$');
+        } else {
+            canvas.setChar(canvasX, canvasY, '#');
+        }
     }
 
 
