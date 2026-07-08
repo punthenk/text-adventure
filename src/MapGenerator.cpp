@@ -1,6 +1,7 @@
 #include "MapGenerator.h"
 #include <algorithm>
 #include <iostream>
+#include <random>
 #include "MapView.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
@@ -11,48 +12,71 @@ Room* MapGenerator::generate() {
     Room* start = new Room("test", false);
     grid[{0, 0}] = start;
 
-    carve(0, 0, start);
+    generateRooms(0, 0, start);
 
     return start;
 }
 
-void MapGenerator::carve(int x, int y, Room* current_room) {
-    if (created_rooms >= max_amount_of_rooms)
-        return;
+void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
+    grid[{startX, startY}] = startRoom;
+    active_rooms.push_back(startRoom);
+    active_positions[startRoom] = {startX, startY};
+    created_rooms = 1;
 
-    grid[{x, y}] = current_room;
+    std::uniform_real_distribution<double> chance(0.0, 1.0);
 
-    std::vector<Direction> directions = {
-        Direction::North,
-        Direction::East,
-        Direction::South,
-        Direction::West,
-    };
+    while (!active_rooms.empty() && created_rooms < max_amount_of_rooms) {
+        // 1. Choose which room we expand on
+        int chosenIndex;
+        if (chance(rng) < 0.5) {
+            chosenIndex = active_rooms.size() - 1;  // Newest -> make path longer
+        } else {
+            chosenIndex = std::uniform_int_distribution<int>(0, active_rooms.size() - 1)(rng); // Random room to expand
+        }
+        Room* room = active_rooms[chosenIndex];
+        auto [x, y] = active_positions[room];
 
-    std::shuffle(directions.begin(), directions.end(), rng);
-    for (Direction dir : directions) {
-        if (created_rooms >= max_amount_of_rooms)
-            return;
+        // 2. Shuffle directions for randomness, and then choose the first valid direction
+        std::vector<Direction> directions = {
+            Direction::North,
+            Direction::East,
+            Direction::South,
+            Direction::West,
+        };
+        std::shuffle(directions.begin(), directions.end(), rng);
 
-        auto [dx, dy] = MapView::directionToOffset(dir);
-        int nx = x + dx;
-        int ny = y + dy;
+        bool foundValidDirection = false;
 
-        if (nx < 0 || nx >= grid_width || ny < 0 || ny >= grid_height) {
-            continue;
+        for (Direction dir : directions) {
+            auto [dx, dy] = MapView::directionToOffset(dir);
+            int nx = x + dx;
+            int ny = y + dy;
+
+            if (nx < 0 || nx >= grid_width || ny < 0 || ny >= grid_height) {
+                continue;
+            }
+            if (grid.find({nx, ny}) != grid.end()) {
+                continue;
+            }
+
+            // Found a valid direction, now make a new room
+            Room* neighborRoom = new Room("in a test room", false);
+            grid[{nx, ny}] = neighborRoom;
+            room->addExit(dir, neighborRoom);
+            neighborRoom->addExit(opposite(dir), room);
+
+            active_rooms.push_back(neighborRoom);
+            active_positions[neighborRoom] = {nx, ny};
+            created_rooms++;
+
+            foundValidDirection = true;
+            break;
         }
 
-        if (grid.find({nx, ny}) != grid.end()) {
-            continue;
+        // 3. If this room does not have a valid direction, the delete the room from valid active_rooms
+        if (!foundValidDirection) {
+            active_rooms.erase(active_rooms.begin() + chosenIndex);
         }
-
-        Room* neighbor_room = new Room("test", false);
-        grid[{nx, ny}] = neighbor_room;
-        current_room->addExit(dir, neighbor_room);
-        neighbor_room->addExit(opposite(dir), current_room);
-
-        created_rooms++;
-        carve(nx, ny, neighbor_room);
     }
 }
 

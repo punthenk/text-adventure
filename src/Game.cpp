@@ -62,7 +62,7 @@ void Game::goRoom(Command command) {
 void Game::createRooms() {
     unsigned int seed = time(nullptr);
     srand(seed);
-    MapGenerator map_generator = MapGenerator(seed, 6, 6);
+    MapGenerator map_generator = MapGenerator(seed, 6, 4);
     player.setCurrentRoom(map_generator.generate());
 }
 

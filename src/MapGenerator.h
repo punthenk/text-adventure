@@ -16,7 +16,9 @@ private:
     std::map<std::pair<int, int>, Room*> grid;
     int created_rooms = 0;
     int max_amount_of_rooms;
+    std::vector<Room*> active_rooms;
+    std::map<Room*, std::pair<int, int>> active_positions;
 
-    void carve(int x, int y, Room* current_room);
+    void generateRooms(int x, int y, Room* current_room);
     Direction opposite(Direction dir);
 };
