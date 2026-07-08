@@ -12,7 +12,7 @@ Room* MapGenerator::generate() {
     Room* start = new Room("test", false);
     grid[{0, 0}] = start;
 
-    generateRooms(0, 0, start);
+    generateRooms(0, grid_height - 1, start);
 
     return start;
 }
