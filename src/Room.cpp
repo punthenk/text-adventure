@@ -57,3 +57,7 @@ void Room::markVisited() {
 bool Room::getIsVisited() const {
     return is_visited;
 }
+
+void Room::unlock() {
+    is_locked = false;
+}

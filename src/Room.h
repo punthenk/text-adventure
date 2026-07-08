@@ -17,6 +17,7 @@ public:
     std::map<Direction, Room*>& getExits();
     void markVisited();
     bool getIsVisited() const;
+    void unlock();
 
 private:
     string description;
