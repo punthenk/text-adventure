@@ -8,6 +8,7 @@ public:
     int getHealth();
     bool isAlive();
     void setCurrentRoom(Room* room);
+    void damage(int damage);
     Room* current_room;
 
 private:

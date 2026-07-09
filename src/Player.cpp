@@ -22,3 +22,7 @@ void Player::setCurrentRoom(Room *room) {
     current_room = room;
     current_room->markVisited();
 }
+
+void Player::damage(int damage) {
+    health -= damage;
+}
