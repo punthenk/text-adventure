@@ -40,9 +40,12 @@ bool Inventory::checkIfItemIsAvailable(ItemType item_type) {
 
 string Inventory::listItems() {
     string str;
+    bool first = true;
     for (auto item : items) {
-        string item_string = CommandLibrary::itemToString(item.first);
-        str += item_string + ", ";
+        if (!first)
+            str += ", ";
+        str += CommandLibrary::itemToString(item.first);
+        first = false;
     }
-    return str;
+    return !str.empty() ? str : "is empty";
 }

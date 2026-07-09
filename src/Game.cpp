@@ -10,8 +10,8 @@
 Game::Game() {
     createRooms();
 
-    Item* knife = new Knife(1, ItemType::Knife, "A knife");
-    player.setItemInInventory(ItemType::Knife, knife);
+    // Item* knife = new Knife(1, ItemType::Knife, "A knife");
+    // player.setItemInInventory(ItemType::Knife, knife);
 }
 
 void Game::play() {
@@ -32,6 +32,7 @@ void Game::printHelp() {
 void Game::status() {
     std::cout << "Your health is " << player.getHealth() << "/100" << std::endl;
     std::cout << "----------------------" << std::endl;
+    std::cout << "Your inventory: " << player.backpack.listItems() << std::endl;
 }
 
 void Game::look() {

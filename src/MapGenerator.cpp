@@ -14,6 +14,9 @@ Room* MapGenerator::generate() {
     Room* start = new Room("test", false);
     grid[{0, 0}] = start;
 
+    Item* knife = new Knife(1, ItemType::Knife, "A knife");
+    start->chest.put(ItemType::Knife, knife);
+
     generateRooms(0, grid_height - 1, start);
 
     return start;
