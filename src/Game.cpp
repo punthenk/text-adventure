@@ -80,7 +80,10 @@ void Game::useItem(Command command) {
     if (item != nullptr) {
         UseContext ctx{player};
         item->use(ctx);
+        return;
     }
+
+    std::cout << "The item was not found in your backpack!" << std::endl;
 }
 
 void Game::takeItem(Command command) {
