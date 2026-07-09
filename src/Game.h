@@ -13,8 +13,6 @@ private:
     Parser parser;
     Player player;
 
-
-
     bool processCommand(Command command);
     void printHelp();
     void status();
@@ -22,6 +20,7 @@ private:
     void goRoom(Command command);
     void useItem(Command command);
     void takeItem(Command command);
+    void dropItem(Command command);
 
     void createRooms();
 };

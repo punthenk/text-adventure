@@ -12,6 +12,7 @@ enum class CommandType {
     Map,
     Use,
     Take,
+    Drop,
     Unknown,
 };
 

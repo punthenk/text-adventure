@@ -9,14 +9,14 @@ bool Inventory::put(ItemType item_type, Item* item) {
     return true;
 }
 
-Item* Inventory::removeItem(ItemType item_type) {
+bool Inventory::removeItem(ItemType item_type) {
     for (const auto& item : items) {
         if (item.first == item_type) {
             items.erase(item.first);
-            return item.second;
+            return true;
         }
     }
-    return nullptr;
+    return false;;
 }
 
 

@@ -17,6 +17,7 @@ CommandLibrary::CommandLibrary() {
     valid_commands["quit"] = CommandType::Quit;
     valid_commands["use"] = CommandType::Use;
     valid_commands["take"] = CommandType::Take;
+    valid_commands["drop"] = CommandType::Drop;
 
     // Directions
     valid_directions["north"] = Direction::North;

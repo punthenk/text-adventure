@@ -100,6 +100,20 @@ void Game::takeItem(Command command) {
     player.takeFromChest(item_type);
 }
 
+void Game::dropItem(Command command) {
+    if (!command.hasItem()) {
+        std::cout << "What item?" << std::endl;
+        return;
+    } else if (!command.hasValidItem()) {
+        std::cout << "That is not a valid item!" << std::endl;
+        return;
+    }
+
+    ItemType item_type = command.item;
+
+    player.dropToChest(item_type);
+}
+
 void Game::createRooms() {
     unsigned int seed = time(nullptr);
     // unsigned int seed = 1783607309; // leuk map jonge!
@@ -144,6 +158,10 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Take: {
             takeItem(command);
+            break;
+        }
+        case CommandType::Drop: {
+            dropItem(command);
             break;
         }
         case CommandType::Unknown: {

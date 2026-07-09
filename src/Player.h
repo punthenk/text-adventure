@@ -13,6 +13,7 @@ public:
     bool setItemInInventory(ItemType item_type, Item* item); // Temporary
 
     bool takeFromChest(ItemType item_type);
+    bool dropToChest(ItemType item_type);
 
     Inventory backpack;
     Room* current_room;

@@ -42,10 +42,29 @@ bool Player::takeFromChest(ItemType item_type) {
     }
 
     if (backpack.put(item_type, item)) {
+        current_room->chest.removeItem(item_type);
         std::cout << "The " << CommandLibrary::itemToString(item_type) << " is put in your backpack!" << std::endl;
         return true;
     }
 
     std::cout << "There went something wrong tyring to put the item in your backpack :(" << std::endl;
+    return false;
+}
+
+bool Player::dropToChest(ItemType item_type) {
+    Item* item = backpack.get(item_type);
+
+    if (current_room->chest.checkIfItemIsAvailable(item_type)) {
+        std::cout << "This item cannot be droped in this room!" << std::endl;
+    } else if (item != nullptr) {
+        if (current_room->chest.put(item_type, item)) {
+            backpack.removeItem(item_type);
+            std::cout << "The " << CommandLibrary::itemToString(item_type) << " is dropped in the room!" << std::endl;
+            return true;
+        }
+    } else {
+        std::cout << CommandLibrary::itemToString(item_type) << " is not in your backpack!" << std::endl;
+    }
+
     return false;
 }
