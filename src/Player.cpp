@@ -1,4 +1,7 @@
 #include "Player.h"
+#include <iostream>
+
+#include "CommandLibrary.h"
 
 Player::Player() : backpack(1000) {
     health = 100;
@@ -29,4 +32,20 @@ void Player::damage(int damage) {
 
 bool Player::setItemInInventory(ItemType item_type, Item* item) {
     return backpack.put(item_type, item);
+}
+
+bool Player::takeFromChest(ItemType item_type) {
+    Item* item = current_room->chest.get(item_type);
+    if (item == nullptr) {
+        std::cout << "The thing you want to pick up does not exist!" << std::endl;
+        return false;
+    }
+
+    if (backpack.put(item_type, item)) {
+        std::cout << "The " << CommandLibrary::itemToString(item_type) << " is put in your backpack!" << std::endl;
+        return true;
+    }
+
+    std::cout << "There went something wrong tyring to put the item in your backpack :(" << std::endl;
+    return false;
 }

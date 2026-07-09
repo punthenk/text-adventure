@@ -16,6 +16,7 @@ CommandLibrary::CommandLibrary() {
     valid_commands["map"] = CommandType::Map;
     valid_commands["quit"] = CommandType::Quit;
     valid_commands["use"] = CommandType::Use;
+    valid_commands["take"] = CommandType::Take;
 
     // Directions
     valid_directions["north"] = Direction::North;

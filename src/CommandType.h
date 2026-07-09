@@ -11,6 +11,7 @@ enum class CommandType {
     Go,
     Map,
     Use,
+    Take,
     Unknown,
 };
 

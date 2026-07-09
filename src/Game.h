@@ -14,12 +14,14 @@ private:
     Player player;
 
 
+
     bool processCommand(Command command);
     void printHelp();
     void status();
     void look();
     void goRoom(Command command);
     void useItem(Command command);
+    void takeItem(Command command);
 
     void createRooms();
 };
