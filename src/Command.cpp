@@ -15,3 +15,11 @@ bool Command::hasDirection() {
 bool Command::hasValidDirection() {
     return direction != Direction::Unknown && direction != Direction::NotSet;
 }
+
+bool Command::hasItem() {
+    return item != ItemType::NotSet;
+}
+
+bool Command::hasValidItem() {
+    return item != ItemType::Unknown && item != ItemType::Unknown;
+}

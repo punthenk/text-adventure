@@ -40,6 +40,9 @@ Command Parser::getCommand() {
             command.direction = command_library.lookup(command_library.getValidDirections(), command_strings[1], Direction::NotSet);
             break;
         }
+        case CommandType::Use: {
+            command.item = command_library.lookup(command_library.getValidItems(), command_strings[1], ItemType::NotSet);
+        }
         default:
             break;
     }

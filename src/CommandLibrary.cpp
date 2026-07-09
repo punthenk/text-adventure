@@ -19,6 +19,9 @@ CommandLibrary::CommandLibrary() {
     valid_directions["east"] = Direction::East;
     valid_directions["south"] = Direction::South;
     valid_directions["west"] = Direction::West;
+
+    // Items
+    valid_items["knife"] = ItemType::Knife;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {
@@ -68,4 +71,8 @@ std::map<string, CommandType> CommandLibrary::getValidCommands() const {
 
 std::map<string, Direction> CommandLibrary::getValidDirections() const {
     return valid_directions;
+}
+
+std::map<string, ItemType> CommandLibrary::getValidItems() const {
+    return valid_items;
 }

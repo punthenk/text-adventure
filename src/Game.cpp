@@ -59,6 +59,20 @@ void Game::goRoom(Command command) {
     }
 }
 
+void Game::useItem(Command command) {
+    if (!command.hasItem()) {
+        std::cout << "What item?" << std::endl;
+        return;
+    } else if (!command.hasValidItem()) {
+        std::cout << "That is not a valid item!" << std::endl;
+        return;
+    }
+
+    ItemType item = command.item;
+
+
+}
+
 void Game::createRooms() {
     unsigned int seed = time(nullptr);
     srand(seed);
@@ -94,6 +108,10 @@ bool Game::processCommand(Command command) {
             MapView map_view(player.current_room);
             map_view.draw();
             break;
+        }
+        case CommandType::Use: {
+            useItem(command);
+            breakl;
         }
         case CommandType::Unknown: {
             std::cout << "I have no clue what you want..." << std::endl;

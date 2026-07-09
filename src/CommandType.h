@@ -10,6 +10,7 @@ enum class CommandType {
     Look,
     Go,
     Map,
+    Use,
     Unknown,
 };
 
@@ -20,4 +21,10 @@ enum class Direction {
     West,
     Unknown,
     NotSet
+};
+
+enum class ItemType {
+    Knife,
+    Unknown,
+    NotSet,
 };
