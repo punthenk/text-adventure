@@ -1,9 +1,11 @@
 #pragma once
+
+#include <cstdint>
 //
 // Created by Michiel Nijenhuis on 02/07/2026.
 //
 
-enum class CommandType {
+enum class CommandType : std::uint8_t {
     Help,
     Quit,
     Status,
@@ -16,7 +18,7 @@ enum class CommandType {
     Unknown,
 };
 
-enum class Direction {
+enum class Direction : std::uint8_t {
     North,
     East,
     South,
@@ -25,7 +27,7 @@ enum class Direction {
     NotSet
 };
 
-enum class ItemType {
+enum class ItemType : std::uint8_t {
     Knife,
     Unknown,
     NotSet,

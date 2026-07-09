@@ -16,7 +16,7 @@ struct UseContext {
 
 class Item {
 public:
-    Item(int weight, ItemType name, string description) : weight(weight), name(name), description(description) { }
+    Item(int weight, ItemType name, string description) : weight(weight), name(name), description(std::move(description)) { }
     virtual ~Item() = default;
     virtual void use(UseContext ctx) = 0;
 
