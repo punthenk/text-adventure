@@ -16,4 +16,6 @@ add_executable(game
     src/Canvas.cpp
     src/TerminalRawMode.cpp
     src/MapGenerator.cpp
+    src/Inventory.cpp
+    src/Knife.cpp
 )

@@ -1,6 +1,6 @@
 #include "Player.h"
 
-Player::Player() {
+Player::Player() : backpack(1000) {
     health = 100;
     backpack_space = 20;
     current_room = nullptr;
@@ -25,4 +25,8 @@ void Player::setCurrentRoom(Room *room) {
 
 void Player::damage(int damage) {
     health -= damage;
+}
+
+bool Player::setItemInInventory(ItemType item_type, Item* item) {
+    return backpack.getItem(item_type, item);
 }

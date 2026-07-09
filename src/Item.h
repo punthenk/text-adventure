@@ -1,7 +1,10 @@
 #pragma once
 
 #include <string>
-#include "Player.h"
+#include "CommandType.h"
+
+class Player;
+class Room;
 
 using std::string;
 
@@ -13,7 +16,7 @@ struct UseContext {
 
 class Item {
 public:
-    Item(int weight, ItemType name, string description) : weight(std::move(weight)), name(name), description(description) { }
+    Item(int weight, ItemType name, string description) : weight(weight), name(name), description(description) { }
     virtual ~Item() = default;
     virtual void use(UseContext ctx) = 0;
 

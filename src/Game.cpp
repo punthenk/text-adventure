@@ -3,11 +3,15 @@
 #include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
+#include "Knife.h"
 #include "MapGenerator.h"
 #include "MapView.h"
 
 Game::Game() {
     createRooms();
+
+    Item* knife = new Knife(1, ItemType::Knife, "A knife");
+    player.setItemInInventory(ItemType::Knife, knife);
 }
 
 void Game::play() {
@@ -68,9 +72,13 @@ void Game::useItem(Command command) {
         return;
     }
 
-    ItemType item = command.item;
+    ItemType item_type = command.item;
 
-
+    Item* item = player.backpack.getItem(item_type);
+    if (item != nullptr) {
+        UseContext ctx{player};
+        item->use(ctx);
+    }
 }
 
 void Game::createRooms() {
@@ -111,7 +119,7 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Use: {
             useItem(command);
-            breakl;
+            break;
         }
         case CommandType::Unknown: {
             std::cout << "I have no clue what you want..." << std::endl;

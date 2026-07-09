@@ -13,6 +13,7 @@ CommandLibrary::CommandLibrary() {
     valid_commands["go"] = CommandType::Go;
     valid_commands["map"] = CommandType::Map;
     valid_commands["quit"] = CommandType::Quit;
+    valid_commands["use"] = CommandType::Use;
 
     // Directions
     valid_directions["north"] = Direction::North;

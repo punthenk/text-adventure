@@ -1,5 +1,6 @@
 #include "Knife.h"
 #include <iostream>
+#include "Player.h"
 
 void Knife::use(UseContext ctx) {
     ctx.player.damage(20);

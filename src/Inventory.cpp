@@ -17,3 +17,12 @@ Item* Inventory::removeItem(ItemType item_type) {
     }
     return nullptr;
 }
+
+Item* Inventory::getItem(ItemType item_type) {
+    for (const auto& item : items) {
+        if (item.first == item_type) {
+            return item.second;
+        }
+    }
+    return nullptr;
+}
