@@ -116,7 +116,7 @@ void Game::dropItem(Command command) {
 
 void Game::createRooms() {
     unsigned int seed = time(nullptr);
-    // unsigned int seed = 1783607309; // leuk map jonge!
+    // unsigned int seed = 1783618278; // Fun map :)!
     srand(seed);
     std::cerr << seed << std::endl;
     MapGenerator map_generator = MapGenerator(seed, 6, 4);
