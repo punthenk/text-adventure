@@ -74,11 +74,27 @@ void Game::useItem(Command command) {
         return;
     }
 
+    UseContext ctx{};
+
+    if (command.item == ItemType::Key) {
+        if (!command.hasDirection()) {
+            std::cout << "Use where?" << std::endl;
+            return;
+        } else if (!command.hasValidDirection()) {
+            std::cout << "That is not a valid direction!";
+            return;
+        }
+
+        Direction direction = command.direction;
+        ctx.direction = direction;
+    }
+
     ItemType item_type = command.item;
 
     Item* item = player.backpack.get(item_type);
     if (item != nullptr) {
-        UseContext ctx{player};
+        Player* player_pointer = &player;
+        ctx.player = player_pointer;
         item->use(ctx);
         return;
     }

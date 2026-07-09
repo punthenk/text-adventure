@@ -5,8 +5,8 @@
 
 using std::string;
 
-class Knife : public Item {
+class Key : public Item {
 public:
-    Knife(int weight);
+    Key(int weight);
     void use(UseContext ctx) override;
 };

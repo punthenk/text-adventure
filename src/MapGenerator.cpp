@@ -1,8 +1,8 @@
 #include "MapGenerator.h"
 #include <algorithm>
-#include <iostream>
 #include <random>
 
+#include "Key.h"
 #include "Knife.h"
 #include "MapView.h"
 
@@ -14,8 +14,10 @@ Room* MapGenerator::generate() {
     Room* start = new Room("test", false);
     grid[{0, 0}] = start;
 
-    Item* knife = new Knife(1, ItemType::Knife, "A knife");
+    Item* knife = new Knife(1);
+    Item* key = new Key(1);
     start->chest.put(ItemType::Knife, knife);
+    start->chest.put(ItemType::Key, key);
 
     generateRooms(0, grid_height - 1, start);
 
@@ -65,11 +67,16 @@ void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
             }
 
             // Found a valid direction, now make a new room
-            Room* neighborRoom = new Room("in a test room", false);
+            Room* neighborRoom = new Room("in a test room", true);
 
             if (chance(rng) < 0.25) {
-                Item* knife = new Knife(1, ItemType::Knife, "knife");
+                Item* knife = new Knife(1);
                 neighborRoom->chest.put(ItemType::Knife, knife);
+            }
+
+            if (chance(rng) < 0.9) {
+                Item* key = new Key(1);
+                neighborRoom->chest.put(ItemType::Key, key);
             }
 
             grid[{nx, ny}] = neighborRoom;

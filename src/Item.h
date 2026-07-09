@@ -9,14 +9,13 @@ class Room;
 using std::string;
 
 struct UseContext {
-    Player& player;
-    Room* room = nullptr;
+    Player* player;
     Direction direction = {};
 };
 
 class Item {
 public:
-    Item(int weight, ItemType name, string description) : weight(weight), name(name), description(std::move(description)) { }
+    Item(int weight) : weight(weight) { }
     virtual ~Item() = default;
     virtual void use(UseContext ctx) = 0;
 

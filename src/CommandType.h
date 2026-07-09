@@ -29,6 +29,7 @@ enum class Direction : std::uint8_t {
 
 enum class ItemType : std::uint8_t {
     Knife,
+    Key,
     Unknown,
     NotSet,
 };

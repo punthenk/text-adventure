@@ -27,6 +27,7 @@ CommandLibrary::CommandLibrary() {
 
     // Items
     valid_items["knife"] = ItemType::Knife;
+    valid_items["key"] = ItemType::Key;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {

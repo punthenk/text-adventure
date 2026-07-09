@@ -1,6 +1,7 @@
 #include "Room.h"
 #include "CommandLibrary.h"
 #include "CommandType.h"
+#include <iostream>
 
 Room::Room(string desc, bool roomIsLocked) {
     description = desc;
@@ -59,5 +60,10 @@ bool Room::getIsVisited() const {
 }
 
 void Room::unlock() {
-    is_locked = false;
+    if (is_locked) {
+        is_locked = false;
+        std::cout << "The room is unlocked!" << std::endl;
+        return;
+    }
+    std::cout << "This room is already open!" << std::endl;
 }

@@ -42,6 +42,7 @@ Command Parser::getCommand() {
         }
         case CommandType::Use: {
             command.item = command_library.lookup(command_library.getValidItems(), command_strings[1], ItemType::NotSet);
+            command.direction = command_library.lookup(command_library.getValidDirections(), command_strings[2], Direction::NotSet);
         }
         case CommandType::Take: {
             command.item = command_library.lookup(command_library.getValidItems(), command_strings[1], ItemType::NotSet);

@@ -18,4 +18,5 @@ add_executable(game
     src/MapGenerator.cpp
     src/Inventory.cpp
     src/Knife.cpp
+    src/Key.cpp
 )
