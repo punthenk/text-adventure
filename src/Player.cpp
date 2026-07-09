@@ -28,5 +28,8 @@ void Player::damage(int damage) {
 }
 
 bool Player::setItemInInventory(ItemType item_type, Item* item) {
-    return backpack.getItem(item_type, item);
+    return backpack.put(item_type, item);
+}
+
+Item * Player::takeFromChest(ItemType item_type) {
 }

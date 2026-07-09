@@ -74,7 +74,7 @@ void Game::useItem(Command command) {
 
     ItemType item_type = command.item;
 
-    Item* item = player.backpack.getItem(item_type);
+    Item* item = player.backpack.get(item_type);
     if (item != nullptr) {
         UseContext ctx{player};
         item->use(ctx);

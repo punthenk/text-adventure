@@ -3,7 +3,7 @@
 Inventory::Inventory(int max_weight) : max_weight(max_weight) {
 }
 
-bool Inventory::getItem(ItemType item_type, Item* item) {
+bool Inventory::put(ItemType item_type, Item* item) {
     items[item_type] = item;
     return true;
 }
@@ -18,11 +18,21 @@ Item* Inventory::removeItem(ItemType item_type) {
     return nullptr;
 }
 
-Item* Inventory::getItem(ItemType item_type) {
+
+Item* Inventory::get(ItemType item_type) {
     for (const auto& item : items) {
         if (item.first == item_type) {
             return item.second;
         }
     }
     return nullptr;
+}
+
+bool Inventory::checkIfItemIsAvailable(ItemType item_type) {
+    for (const auto& item : items) {
+        if (item.first == item_type) {
+            return true;
+        }
+    }
+    return false;
 }

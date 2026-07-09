@@ -10,9 +10,10 @@ using std::string;
 class Inventory {
 public:
     Inventory(int max_weight);
-    bool getItem(ItemType item_type, Item* item);
+    bool put(ItemType item_type, Item* item);
+    Item* get(ItemType item_type);
     Item* removeItem(ItemType item_type);
-    Item* getItem(ItemType item_type);
+    bool checkIfItemIsAvailable(ItemType item_type);
 
 private:
     int max_weight;

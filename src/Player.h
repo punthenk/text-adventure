@@ -11,6 +11,9 @@ public:
     void setCurrentRoom(Room* room);
     void damage(int damage);
     bool setItemInInventory(ItemType item_type, Item* item); // Temporary
+
+    Item* takeFromChest(ItemType item_type);
+
     Room* current_room;
     Inventory backpack;
 
