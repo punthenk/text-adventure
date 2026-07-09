@@ -5,6 +5,8 @@
 
 using std::string;
 
+std::map<std::string, ItemType> CommandLibrary::valid_items;
+
 CommandLibrary::CommandLibrary() {
     // Commands
     valid_commands["help"] = CommandType::Help;
@@ -66,6 +68,15 @@ string CommandLibrary::directionToString(Direction direction) {
     return "unknown";
 }
 
+string CommandLibrary::itemToString(ItemType item_type) {
+    for (auto item : valid_items) {
+        if (item_type == item.second) {
+            return item.first;
+        }
+    }
+    return "";
+}
+
 std::map<string, CommandType> CommandLibrary::getValidCommands() const {
     return valid_commands;
 }
@@ -74,6 +85,6 @@ std::map<string, Direction> CommandLibrary::getValidDirections() const {
     return valid_directions;
 }
 
-std::map<string, ItemType> CommandLibrary::getValidItems() const {
+std::map<string, ItemType> CommandLibrary::getValidItems() {
     return valid_items;
 }

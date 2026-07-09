@@ -14,6 +14,7 @@ public:
     Item* get(ItemType item_type);
     Item* removeItem(ItemType item_type);
     bool checkIfItemIsAvailable(ItemType item_type);
+    string listItems();
 
 private:
     int max_weight;

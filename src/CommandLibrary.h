@@ -15,6 +15,7 @@ public:
     string getCommandsString();
 
     static string directionToString(Direction direction);
+    static string itemToString(ItemType item_type);
 
     template<typename EnumType>
     EnumType lookup(const std::map<string, EnumType> &table, const string &word, EnumType empty_fallback) {
@@ -29,11 +30,11 @@ public:
 
     std::map<string, CommandType> getValidCommands() const;
     std::map<string, Direction> getValidDirections() const;
-    std::map<string, ItemType> getValidItems() const;
+    std::map<string, ItemType> getValidItems();
 
 private:
     std::map<string, CommandType> valid_commands;
     std::map<string, Direction> valid_directions;
-    std::map<string, ItemType> valid_items;
+    static std::map<string, ItemType> valid_items;
 };
 

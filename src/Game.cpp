@@ -36,6 +36,7 @@ void Game::status() {
 
 void Game::look() {
     std::cout << player.current_room->getLongDescription() << std::endl;
+    std::cout << player.current_room->chest.listItems() << std::endl;
 }
 
 void Game::goRoom(Command command) {
@@ -83,7 +84,9 @@ void Game::useItem(Command command) {
 
 void Game::createRooms() {
     unsigned int seed = time(nullptr);
+    // unsigned int seed = 1783607309; // leuk map jonge!
     srand(seed);
+    std::cerr << seed << std::endl;
     MapGenerator map_generator = MapGenerator(seed, 6, 4);
     player.setCurrentRoom(map_generator.generate());
 }

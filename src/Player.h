@@ -14,8 +14,8 @@ public:
 
     Item* takeFromChest(ItemType item_type);
 
-    Room* current_room;
     Inventory backpack;
+    Room* current_room;
 
 private:
     int backpack_space;

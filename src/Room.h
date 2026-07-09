@@ -1,7 +1,9 @@
 #pragma once
+
 #include <map>
 #include <string>
 #include "CommandType.h"
+#include "Inventory.h"
 
 using std::string;
 
@@ -18,6 +20,7 @@ public:
     void markVisited();
     bool getIsVisited() const;
     void unlock();
+    Inventory chest{9999};
 
 private:
     string description;

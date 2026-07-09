@@ -15,7 +15,7 @@ int Player::getHealth() {
 }
 
 bool Player::isAlive() {
-    return health >= 0;
+    return health > 0;
 }
 
 void Player::setCurrentRoom(Room *room) {
@@ -29,7 +29,4 @@ void Player::damage(int damage) {
 
 bool Player::setItemInInventory(ItemType item_type, Item* item) {
     return backpack.put(item_type, item);
-}
-
-Item * Player::takeFromChest(ItemType item_type) {
 }

@@ -1,4 +1,5 @@
 #include "Inventory.h"
+#include "CommandLibrary.h"
 
 Inventory::Inventory(int max_weight) : max_weight(max_weight) {
 }
@@ -35,4 +36,13 @@ bool Inventory::checkIfItemIsAvailable(ItemType item_type) {
         }
     }
     return false;
+}
+
+string Inventory::listItems() {
+    string str;
+    for (auto item : items) {
+        string item_string = CommandLibrary::itemToString(item.first);
+        str += item_string + ", ";
+    }
+    return str;
 }

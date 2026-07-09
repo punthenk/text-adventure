@@ -2,6 +2,8 @@
 #include <algorithm>
 #include <iostream>
 #include <random>
+
+#include "Knife.h"
 #include "MapView.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
@@ -61,6 +63,12 @@ void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
 
             // Found a valid direction, now make a new room
             Room* neighborRoom = new Room("in a test room", false);
+
+            if (chance(rng) < 0.25) {
+                Item* knife = new Knife(1, ItemType::Knife, "knife");
+                neighborRoom->chest.put(ItemType::Knife, knife);
+            }
+
             grid[{nx, ny}] = neighborRoom;
             room->addExit(dir, neighborRoom);
             neighborRoom->addExit(opposite(dir), room);
