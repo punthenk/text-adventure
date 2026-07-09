@@ -24,9 +24,27 @@ void Game::play() {
     std::cout << "Bye" << std::endl;
 }
 
-void Game::printHelp() {
-    std::cout << "Here is you help!" << std::endl;
-    parser.printValidCommands();
+void Game::printHelp(Command command) {
+    if (!command.hasItem()) {
+        std::cout << "Here is you help!" << std::endl;
+        parser.printValidCommands();
+        return;
+    } else if (!command.hasValidItem()) {
+        std::cout << "We don't support help for that item" << std::endl;
+        return;
+    }
+
+    std::cout << "ITEM HELP" << std::endl;
+    std::cout << "------------------------" << std::endl;
+
+    Item* item = player.backpack.get(command.item);
+    if (item != nullptr) {
+        std::cout << "Name: " << CommandLibrary::itemToString(item->getName()) << std::endl;
+        std::cout << "Description: " << item->getDescription() << std::endl;
+        std::cout << "Weight: " << item->getWeight() << " kg" << std::endl;
+    } else {
+        std::cout << "You need to have that item in your backpack to ask help" << std::endl;
+    }
 }
 
 void Game::status() {
@@ -144,7 +162,7 @@ bool Game::processCommand(Command command) {
 
     switch (command.type) {
         case CommandType::Help: {
-            printHelp();
+            printHelp(command);
             break;
         }
         case CommandType::Status: {

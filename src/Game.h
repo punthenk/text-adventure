@@ -14,7 +14,7 @@ private:
     Player player;
 
     bool processCommand(Command command);
-    void printHelp();
+    void printHelp(Command command);
     void status();
     void look();
     void goRoom(Command command);
