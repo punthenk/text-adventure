@@ -17,7 +17,9 @@ add_executable(game
     src/TerminalRawMode.cpp
     src/MapGenerator.cpp
     src/Inventory.cpp
-    src/Knife.cpp
-    src/Key.cpp
-    src/HealItems.cpp
+    src/items/Knife.cpp
+    src/items/Key.cpp
+    src/items/HealItems.cpp
 )
+
+target_include_directories(game PRIVATE src)

@@ -6,10 +6,10 @@
 #include "MapGenerator.h"
 #include <algorithm>
 #include <random>
-#include "Key.h"
-#include "Knife.h"
+#include "items/Key.h"
+#include "items/Knife.h"
 #include "MapView.h"
-#include "HealItems.h"
+#include "items/HealItems.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
     max_amount_of_rooms = 10;

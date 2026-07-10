@@ -8,7 +8,7 @@
 #include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
-#include "Knife.h"
+#include "items/Knife.h"
 #include "MapGenerator.h"
 #include "MapView.h"
 
