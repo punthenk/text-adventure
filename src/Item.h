@@ -28,10 +28,12 @@ public:
     int getWeight() const { return weight; }
     const string& getDescription() const { return description; }
     const string& getUseGuide() const { return use_guide; }
+    const bool isOneTimeUse() const { return is_one_time_use; }
 
 protected:
     ItemType name;
     string description;
     string use_guide;
     int weight;
+    bool is_one_time_use;
 };

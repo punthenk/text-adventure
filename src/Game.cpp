@@ -125,6 +125,11 @@ void Game::useItem(Command command) {
     Player *player_pointer = &player;
     ctx.player = player_pointer;
     item->use(ctx);
+
+    if (item->isOneTimeUse()) {
+        player.backpack.removeItem(command.item);
+        delete item;
+    }
 }
 
 void Game::takeItem(Command command) {
