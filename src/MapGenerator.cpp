@@ -12,7 +12,7 @@
 #include "items/HealItems.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
-    max_amount_of_rooms = 10;
+    max_amount_of_rooms = 30;
 }
 
 Room* MapGenerator::generate() {

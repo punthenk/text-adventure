@@ -9,13 +9,14 @@
 #include <string>
 #include <vector>
 #include "CommandType.h"
+#include "core/Console.h"
 
 using std::string;
 
 Parser::Parser() { }
 
 Command Parser::getCommand() {
-    std::cout << "> "; 
+    Console::print("> ");
 
     const string delimiter = " ";
 
@@ -66,6 +67,6 @@ Command Parser::getCommand() {
 }
 
 void Parser::printValidCommands() {
-    std::cout << "You commands are:" << std::endl;
-    std::cout << command_library.getCommandsString() << std::endl;
+    Console::printLine("You commands are:");
+    Console::printLine(command_library.getCommandsString());
 }

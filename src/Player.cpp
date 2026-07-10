@@ -6,9 +6,10 @@
 #include "Player.h"
 #include <iostream>
 #include "CommandLibrary.h"
+#include "core/Console.h"
 
 Player::Player() : backpack(1000) {
-    health = 100;
+    health = 20;
     backpack_space = 20;
     current_room = nullptr;
 }
@@ -39,7 +40,7 @@ void Player::heal(int amount) {
     if (health > 100) {
         health = 100;
     }
-    std::cout << "Your health is now " << health << "/100" << std::endl;
+    Console::printLine("Your health is now " + std::to_string(health) + "/100");
 }
 
 bool Player::setItemInInventory(ItemType item_type, Item* item) {
@@ -49,17 +50,17 @@ bool Player::setItemInInventory(ItemType item_type, Item* item) {
 bool Player::takeFromChest(ItemType item_type) {
     Item* item = current_room->chest.get(item_type);
     if (item == nullptr) {
-        std::cout << "The thing you want to pick up does not exist!" << std::endl;
+        Console::printLine("The thing you want to pick up does not exist!");
         return false;
     }
 
     if (backpack.put(item_type, item)) {
         current_room->chest.removeItem(item_type);
-        std::cout << "The " << CommandLibrary::itemToString(item_type) << " is put in your backpack!" << std::endl;
+        Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is put in your backpack!");
         return true;
     }
 
-    std::cout << "There went something wrong tyring to put the item in your backpack :(" << std::endl;
+    Console::printLine("There went something wrong tyring to put the item in your backpack :(");
     return false;
 }
 
@@ -67,15 +68,15 @@ bool Player::dropToChest(ItemType item_type) {
     Item* item = backpack.get(item_type);
 
     if (current_room->chest.checkIfItemIsAvailable(item_type)) {
-        std::cout << "This item cannot be droped in this room!" << std::endl;
+        Console::printLine("This item cannot be droped in this room!");
     } else if (item != nullptr) {
         if (current_room->chest.put(item_type, item)) {
             backpack.removeItem(item_type);
-            std::cout << "The " << CommandLibrary::itemToString(item_type) << " is dropped in the room!" << std::endl;
+            Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
             return true;
         }
     } else {
-        std::cout << CommandLibrary::itemToString(item_type) << " is not in your backpack!" << std::endl;
+        Console::printLine(CommandLibrary::itemToString(item_type) + " is not in your backpack!");
     }
 
     return false;

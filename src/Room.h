@@ -27,6 +27,9 @@ public:
     void unlock();
     Inventory chest{9999};
 
+    // TEMPORARY:
+    bool hasKeyInChest();
+
 private:
     string description;
     std::map<Direction, Room*> exits;

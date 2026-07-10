@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include "Canvas.h"
 #include "TerminalRawMode.h"
+#include "core/Console.h"
 
 MapView::MapView(Room* player_current_room) {
     current_room = player_current_room;
@@ -21,10 +22,10 @@ void MapView::draw() {
 
     Canvas canvas = buildCanvas(positions);
 
-    std::cout << "\033[?1049h";
-    std::cout << canvas.render();
-    std::cout << "\nPress 'q' to return.";
-    std::cout.flush();
+    Console::printLine("\033[?1049h");
+    Console::printLine(canvas.render());
+    Console::printLine("\nPress 'q' to return.");
+    Console::flush();
     {
         TerminalRawMode raw;
         char input;
@@ -34,7 +35,7 @@ void MapView::draw() {
                 break;
         }
     }
-    std::cout << "\033[?1049l";
+    Console::printLine("\033[?1049l");
 }
 
 std::pair<int, int> MapView::directionToOffset(Direction dir) {
@@ -98,11 +99,19 @@ Canvas MapView::buildCanvas(const std::map<Room*, std::pair<int,int>>& positions
         const int canvasY = (gridY - bounds.minY) * scale;
         if (current_room == room) {
             canvas.setChar(canvasX, canvasY, '*');
-        } else if (room->getIsVisited()) {
+        } else if (room->hasKeyInChest()) {
+            canvas.setChar(canvasX, canvasY, '!');
+        } else if (!room->getIsLocked()) {
             canvas.setChar(canvasX, canvasY, '#');
         } else {
-            canvas.setChar(canvasX, canvasY, '?');
+            canvas.setChar(canvasX, canvasY, '&');
         }
+
+        // } else if (room->getIsVisited()) {
+        //     canvas.setChar(canvasX, canvasY, '#');
+        // } else {
+        //     canvas.setChar(canvasX, canvasY, '?');
+        // }
     }
 
 

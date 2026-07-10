@@ -22,6 +22,8 @@ CommandLibrary::CommandLibrary() {
     valid_commands["use"] = CommandType::Use;
     valid_commands["take"] = CommandType::Take;
     valid_commands["drop"] = CommandType::Drop;
+    // Terminal-like Commands
+    valid_commands["ls"] = CommandType::Look;
 
     // Directions
     valid_directions["north"] = Direction::North;

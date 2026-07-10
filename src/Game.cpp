@@ -11,6 +11,7 @@
 #include "items/Knife.h"
 #include "MapGenerator.h"
 #include "MapView.h"
+#include "core/Console.h"
 
 Game::Game() {
     createRooms();
@@ -26,51 +27,51 @@ void Game::play() {
         Command command = parser.getCommand();
         finished = processCommand(command);
     }
-    std::cout << "Bye" << std::endl;
+    Console::printLine("Bye");
 }
 
 void Game::printHelp(Command command) {
     if (!command.hasItem()) {
-        std::cout << "Here is you help!" << std::endl;
-        std::cout << "(TIP: You can do `help item` to get more info about that item!)" << std::endl;
+        Console::printLine("Here is you help!");
+        Console::printLine("(TIP: You can do `help item` to get more info about that item!)");
         parser.printValidCommands();
         return;
     } else if (!command.hasValidItem()) {
-        std::cout << "We don't support help for that item" << std::endl;
+        Console::printLine("We don't support help for that item");
         return;
     }
 
-    std::cout << "ITEM HELP" << std::endl;
-    std::cout << "------------------------" << std::endl;
+    Console::printLine("ITEM HELP");
+    Console::printLine("------------------------");
 
     Item* item = player.backpack.get(command.item);
     if (item != nullptr) {
-        std::cout << "Name: " << CommandLibrary::itemToString(item->getName()) << std::endl;
-        std::cout << "Description: " << item->getDescription() << std::endl;
-        std::cout << "Guide: " << item->getUseGuide() << std::endl;
-        std::cout << "Weight: " << item->getWeight() << " kg" << std::endl;
+        Console::printLine("Name: " + CommandLibrary::itemToString(item->getName()));
+        Console::printLine("Description: " + item->getDescription());
+        Console::printLine("Guide: " + item->getUseGuide());
+        Console::printLine("Weight: " + std::to_string(item->getWeight()));
     } else {
-        std::cout << "You need to have that item in your backpack to ask help" << std::endl;
+        Console::printLine("You need to have that item in your backpack to ask help");
     }
 }
 
 void Game::status() {
-    std::cout << "Your health is " << player.getHealth() << "/100" << std::endl;
-    std::cout << "----------------------" << std::endl;
-    std::cout << "Your inventory: " << player.backpack.listItems() << std::endl;
+    Console::printLine("Your health is " + std::to_string(player.getHealth()) + "/100");
+    Console::printLine("----------------------");
+    Console::printLine("Your inventory: " + player.backpack.listItems());
 }
 
 void Game::look() {
-    std::cout << player.current_room->getLongDescription() << std::endl;
-    std::cout << "Items: " << player.current_room->chest.listItems() << std::endl;
+    Console::printLine(player.current_room->getLongDescription());
+    Console::printLine("Items: " + player.current_room->chest.listItems());
 }
 
 void Game::goRoom(Command command) {
     if (!command.hasDirection()) {
-        std::cout << "Go where?" << std::endl;
+        Console::printLine("Go where?");
         return;
     } else if (!command.hasValidDirection()) {
-        std::cout << "That is not a valid direction!" << std::endl;
+        Console::printLine("That is not a valid direction!");
         return;
     }
 
@@ -78,25 +79,25 @@ void Game::goRoom(Command command) {
 
     Room* next_room = player.current_room->getExit(dir);
     if (next_room == nullptr) {
-        std::cout << "There is not exit found in that direction!" << std::endl;
+        Console::printLine("There is not exit found in that direction!");
         return;
     }
 
     if (!next_room->getIsLocked()) {
         player.setCurrentRoom(next_room);
         player.damage(10);
-        std::cout << player.current_room->getLongDescription() << std::endl;
+        Console::printLine(player.current_room->getLongDescription());
     } else {
-        std::cout << "The room you want to enter is locked" << std::endl;
+        Console::printLine("The room you want to enter is locked");
     }
 }
 
 void Game::useItem(Command command) {
     if (!command.hasItem()) {
-        std::cout << "What item?" << std::endl;
+        Console::printLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        std::cout << "That is not a valid item!" << std::endl;
+        Console::printLine("That is not a valid item!");
         return;
     }
 
@@ -104,16 +105,16 @@ void Game::useItem(Command command) {
     UseContext ctx{};
 
     if (item == nullptr) {
-        std::cout << "The item was not found in your backpack!" << std::endl;
+        Console::printLine("The item was not found in your backpack!");
         return;
     }
 
     if (command.item == ItemType::Key) {
         if (!command.hasDirection()) {
-            std::cout << "Use where?" << std::endl;
+            Console::printLine("Use where?");
             return;
         } else if (!command.hasValidDirection()) {
-            std::cout << "That is not a valid direction!" << std::endl;
+            Console::printLine("That is not a valid direction!");
             return;
         }
 
@@ -126,6 +127,7 @@ void Game::useItem(Command command) {
     ctx.player = player_pointer;
     item->use(ctx);
 
+    // FIXME: Item deleted when not used successfully
     if (item->isOneTimeUse()) {
         player.backpack.removeItem(command.item);
         delete item;
@@ -134,10 +136,10 @@ void Game::useItem(Command command) {
 
 void Game::takeItem(Command command) {
     if (!command.hasItem()) {
-        std::cout << "What item?" << std::endl;
+        Console::printLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        std::cout << "That is not a valid item!" << std::endl;
+        Console::printLine("That is not a valid item!");
         return;
     }
 
@@ -148,10 +150,10 @@ void Game::takeItem(Command command) {
 
 void Game::dropItem(Command command) {
     if (!command.hasItem()) {
-        std::cout << "What item?" << std::endl;
+        Console::printLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        std::cout << "That is not a valid item!" << std::endl;
+        Console::printLine("That is not a valid item!");
         return;
     }
 
@@ -161,11 +163,11 @@ void Game::dropItem(Command command) {
 }
 
 void Game::createRooms() {
-    unsigned int seed = time(nullptr);
-    // unsigned int seed = 1783618278; // Fun map :)!
+    // unsigned int seed = time(nullptr);
+    unsigned int seed = 1783697259; // Fun map :)!
     srand(seed);
     std::cerr << seed << std::endl;
-    MapGenerator map_generator = MapGenerator(seed, 6, 4);
+    MapGenerator map_generator = MapGenerator(seed, 15, 10);
     player.setCurrentRoom(map_generator.generate());
 }
 
@@ -211,11 +213,11 @@ bool Game::processCommand(Command command) {
             break;
         }
         case CommandType::Unknown: {
-            std::cout << "I have no clue what you want..." << std::endl;
+            Console::printLine("I have no clue what you want...");
             break;
         }
         default: {
-            std::cout << "I have no clue what you want..." << std::endl;
+            Console::printLine("I have no clue what you want...");
         }
     }
 

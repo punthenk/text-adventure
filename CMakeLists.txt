@@ -20,6 +20,7 @@ add_executable(game
     src/items/Knife.cpp
     src/items/Key.cpp
     src/items/HealItems.cpp
+    src/core/Console.cpp
 )
 
 target_include_directories(game PRIVATE src)
