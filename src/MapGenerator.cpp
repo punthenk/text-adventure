@@ -28,23 +28,27 @@ Room* MapGenerator::generate() {
     return start;
 }
 
-void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
-    grid[{startX, startY}] = startRoom;
-    active_rooms.push_back(startRoom);
-    active_positions[startRoom] = {startX, startY};
+void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
+    grid[{start_x, start_y}] = start_room;
+    active_rooms.push_back(start_room);
+    active_positions[start_room] = {start_x, start_y};
     created_rooms = 1;
+    std::unordered_map<Room*, bool> freely_reachable;
+    freely_reachable[start_room] = true;
+
+    int spare_keys = 0;
 
     std::uniform_real_distribution<double> chance(0.0, 1.0);
 
     while (!active_rooms.empty() && created_rooms < max_amount_of_rooms) {
         // 1. Choose which room we expand on
-        int chosenIndex;
+        int chosen_index;
         if (chance(rng) < 0.5) {
-            chosenIndex = active_rooms.size() - 1;  // Newest -> make path longer
+            chosen_index = active_rooms.size() - 1;  // Newest -> make path longer
         } else {
-            chosenIndex = std::uniform_int_distribution<int>(0, active_rooms.size() - 1)(rng); // Random room to expand
+            chosen_index = std::uniform_int_distribution<int>(0, active_rooms.size() - 1)(rng); // Random room to expand
         }
-        Room* room = active_rooms[chosenIndex];
+        Room* room = active_rooms[chosen_index];
         auto [x, y] = active_positions[room];
 
         // 2. Shuffle directions for randomness, and then choose the first valid direction
@@ -56,7 +60,7 @@ void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
         };
         std::shuffle(directions.begin(), directions.end(), rng);
 
-        bool foundValidDirection = false;
+        bool found_valid_direction = false;
 
         for (Direction dir : directions) {
             auto [dx, dy] = MapView::directionToOffset(dir);
@@ -70,34 +74,46 @@ void MapGenerator::generateRooms(int startX, int startY, Room* startRoom) {
                 continue;
             }
 
+            bool parent_freely_reachable = freely_reachable[room];
+
+            bool room_is_locked = false;
+            if (chance(rng) < 0.30 && spare_keys > 0) {
+                room_is_locked = true;
+                spare_keys--;
+            }
+
             // Found a valid direction, now make a new room
-            Room* neighborRoom = new Room("in a test room", true);
+            Room* neighbor_room = new Room("in a test room", room_is_locked);
+
+            bool this_freely_reachable = parent_freely_reachable && !room_is_locked;
+            freely_reachable[neighbor_room] = this_freely_reachable;
 
             if (chance(rng) < 0.25) {
                 Item* knife = new Knife(1);
-                neighborRoom->chest.put(ItemType::Knife, knife);
+                neighbor_room->chest.put(ItemType::Knife, knife);
             }
 
-            if (chance(rng) < 0.9) {
+            if (this_freely_reachable && chance(rng) < 0.5) {
                 Item* key = new Key(1);
-                neighborRoom->chest.put(ItemType::Key, key);
+                neighbor_room->chest.put(ItemType::Key, key);
+                spare_keys++;
             }
 
-            grid[{nx, ny}] = neighborRoom;
-            room->addExit(dir, neighborRoom);
-            neighborRoom->addExit(opposite(dir), room);
+            grid[{nx, ny}] = neighbor_room;
+            room->addExit(dir, neighbor_room);
+            neighbor_room->addExit(opposite(dir), room);
 
-            active_rooms.push_back(neighborRoom);
-            active_positions[neighborRoom] = {nx, ny};
+            active_rooms.push_back(neighbor_room);
+            active_positions[neighbor_room] = {nx, ny};
             created_rooms++;
 
-            foundValidDirection = true;
+            found_valid_direction = true;
             break;
         }
 
         // 3. If this room does not have a valid direction, the delete the room from valid active_rooms
-        if (!foundValidDirection) {
-            active_rooms.erase(active_rooms.begin() + chosenIndex);
+        if (!found_valid_direction) {
+            active_rooms.erase(active_rooms.begin() + chosen_index);
         }
     }
 }
