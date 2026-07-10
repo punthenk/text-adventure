@@ -6,6 +6,7 @@
 Key::Key(int weight) : Item(weight) {
     name = ItemType::Key;
     description = "A key to open locked doors";
+    use_guide = "To use this item type `use key direction` to unlock a locked room in that direction";
 }
 
 void Key::use(UseContext ctx) {

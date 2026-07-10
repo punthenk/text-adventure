@@ -27,6 +27,7 @@ void Game::play() {
 void Game::printHelp(Command command) {
     if (!command.hasItem()) {
         std::cout << "Here is you help!" << std::endl;
+        std::cout << "(TIP: You can do `help item` to get more info about that item!)" << std::endl;
         parser.printValidCommands();
         return;
     } else if (!command.hasValidItem()) {
@@ -41,6 +42,7 @@ void Game::printHelp(Command command) {
     if (item != nullptr) {
         std::cout << "Name: " << CommandLibrary::itemToString(item->getName()) << std::endl;
         std::cout << "Description: " << item->getDescription() << std::endl;
+        std::cout << "Guide: " << item->getUseGuide() << std::endl;
         std::cout << "Weight: " << item->getWeight() << " kg" << std::endl;
     } else {
         std::cout << "You need to have that item in your backpack to ask help" << std::endl;
@@ -55,7 +57,7 @@ void Game::status() {
 
 void Game::look() {
     std::cout << player.current_room->getLongDescription() << std::endl;
-    std::cout << player.current_room->chest.listItems() << std::endl;
+    std::cout << "Items: " << player.current_room->chest.listItems() << std::endl;
 }
 
 void Game::goRoom(Command command) {
@@ -99,7 +101,7 @@ void Game::useItem(Command command) {
             std::cout << "Use where?" << std::endl;
             return;
         } else if (!command.hasValidDirection()) {
-            std::cout << "That is not a valid direction!";
+            std::cout << "That is not a valid direction!" << std::endl;
             return;
         }
 

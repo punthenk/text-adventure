@@ -22,9 +22,11 @@ public:
     ItemType getName() const { return name; };
     int getWeight() const { return weight; };
     const string& getDescription() const { return description; };
+    const string& getUseGuide() const { return use_guide; };
 
 protected:
     ItemType name;
     string description;
+    string use_guide;
     int weight;
 };
