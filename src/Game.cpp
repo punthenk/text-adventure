@@ -99,7 +99,13 @@ void Game::useItem(Command command) {
         return;
     }
 
+    Item* item = player.backpack.get(command.item);
     UseContext ctx{};
+
+    if (item == nullptr) {
+        std::cout << "The item was not found in your backpack!" << std::endl;
+        return;
+    }
 
     if (command.item == ItemType::Key) {
         if (!command.hasDirection()) {
@@ -114,17 +120,10 @@ void Game::useItem(Command command) {
         ctx.direction = direction;
     }
 
-    ItemType item_type = command.item;
 
-    Item* item = player.backpack.get(item_type);
-    if (item != nullptr) {
-        Player* player_pointer = &player;
-        ctx.player = player_pointer;
-        item->use(ctx);
-        return;
-    }
-
-    std::cout << "The item was not found in your backpack!" << std::endl;
+    Player *player_pointer = &player;
+    ctx.player = player_pointer;
+    item->use(ctx);
 }
 
 void Game::takeItem(Command command) {
