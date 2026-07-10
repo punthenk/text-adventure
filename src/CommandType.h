@@ -1,9 +1,11 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #pragma once
 
 #include <cstdint>
-//
-// Created by Michiel Nijenhuis on 02/07/2026.
-//
 
 enum class CommandType : std::uint8_t {
     Help,

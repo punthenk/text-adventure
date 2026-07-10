@@ -1,7 +1,11 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "MapGenerator.h"
 #include <algorithm>
 #include <random>
-
 #include "Key.h"
 #include "Knife.h"
 #include "MapView.h"

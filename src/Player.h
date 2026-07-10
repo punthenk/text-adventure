@@ -1,4 +1,10 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #pragma once
+
 #include "Inventory.h"
 #include "Room.h"
 

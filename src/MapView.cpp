@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "MapView.h"
 #include <iostream>
 #include <set>

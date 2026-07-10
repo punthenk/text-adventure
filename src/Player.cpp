@@ -1,6 +1,10 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "Player.h"
 #include <iostream>
-
 #include "CommandLibrary.h"
 
 Player::Player() : backpack(1000) {

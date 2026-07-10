@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "Canvas.h"
 
 Canvas::Canvas(int width, int height, char fill) : width(width), height(height) {

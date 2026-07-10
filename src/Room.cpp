@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "Room.h"
 #include "CommandLibrary.h"
 #include "CommandType.h"

@@ -1,8 +1,12 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "Command.h"
 #include <string>
 
 using std::string;
-
 
 bool Command::isUnknown(CommandType command) const {
     return command == CommandType::Unknown;

@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "Game.h"
 #include <iostream>
 #include "Canvas.h"

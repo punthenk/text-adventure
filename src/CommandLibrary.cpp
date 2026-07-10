@@ -1,7 +1,11 @@
+/*
+ * Copyright (c) 2026, Michiel Nijenhuis <contact@michielnijenhuis.com>
+ *
+ */
+
 #include "CommandLibrary.h"
 #include <sstream>
 #include <string>
-
 
 using std::string;
 
