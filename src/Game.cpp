@@ -84,6 +84,7 @@ void Game::goRoom(Command command) {
 
     if (!next_room->getIsLocked()) {
         player.setCurrentRoom(next_room);
+        player.damage(10);
         std::cout << player.current_room->getLongDescription() << std::endl;
     } else {
         std::cout << "The room you want to enter is locked" << std::endl;
