@@ -22,12 +22,22 @@ Game::Game() {
 
 void Game::play() {
     bool finished = false;
+    printWelcome();
 
     while (!finished && player.isAlive()) {
         Command command = parser.getCommand();
         finished = processCommand(command);
     }
     Console::printLine("Bye");
+}
+
+void Game::printWelcome() {
+    Console::typeLine("Welcome to the text-adventure game 'The Facility'");
+    Console::typeLine("This is going to be an incredible !boring game ;)");
+    Console::typeLine("To begin, type `help` if you need any help");
+    Console::typeLine("You goal is to exit the facility and survive!");
+    Console::typeLine("GOOD LUCK!\n");
+    Console::typeLine(player.current_room->getLongDescription());
 }
 
 void Game::printHelp(Command command) {

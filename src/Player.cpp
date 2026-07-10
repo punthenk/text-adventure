@@ -9,7 +9,7 @@
 #include "core/Console.h"
 
 Player::Player() : backpack(1000) {
-    health = 20;
+    health = 100;
     backpack_space = 20;
     current_room = nullptr;
 }
@@ -68,7 +68,7 @@ bool Player::dropToChest(ItemType item_type) {
     Item* item = backpack.get(item_type);
 
     if (current_room->chest.checkIfItemIsAvailable(item_type)) {
-        Console::printLine("This item cannot be droped in this room!");
+        Console::printLine("This item cannot be dropped in this room!");
     } else if (item != nullptr) {
         if (current_room->chest.put(item_type, item)) {
             backpack.removeItem(item_type);

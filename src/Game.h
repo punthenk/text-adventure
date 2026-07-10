@@ -19,6 +19,7 @@ private:
     Player player;
 
     bool processCommand(Command command);
+    void printWelcome();
     void printHelp(Command command);
     void status();
     void look();

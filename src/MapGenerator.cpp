@@ -16,7 +16,7 @@ MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) :
 }
 
 Room* MapGenerator::generate() {
-    Room* start = new Room("test", false);
+    Room* start = new Room("in the first test room", false);
     grid[{0, 0}] = start;
 
     Item* knife = new Knife();
