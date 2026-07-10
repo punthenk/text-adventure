@@ -20,14 +20,14 @@ struct UseContext {
 
 class Item {
 public:
-    Item(int weight) : weight(weight) { }
+    Item() = default;
     virtual ~Item() = default;
     virtual void use(UseContext ctx) = 0;
 
-    ItemType getName() const { return name; };
-    int getWeight() const { return weight; };
-    const string& getDescription() const { return description; };
-    const string& getUseGuide() const { return use_guide; };
+    ItemType getName() const { return name; }
+    int getWeight() const { return weight; }
+    const string& getDescription() const { return description; }
+    const string& getUseGuide() const { return use_guide; }
 
 protected:
     ItemType name;

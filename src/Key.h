@@ -12,6 +12,6 @@ using std::string;
 
 class Key : public Item {
 public:
-    Key(int weight);
+    Key();
     void use(UseContext ctx) override;
 };

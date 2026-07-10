@@ -15,7 +15,8 @@ public:
     int getHealth();
     bool isAlive();
     void setCurrentRoom(Room* room);
-    void damage(int damage);
+    void damage(int amount);
+    void heal(int amount);
     bool setItemInInventory(ItemType item_type, Item* item); // Temporary
 
     bool takeFromChest(ItemType item_type);

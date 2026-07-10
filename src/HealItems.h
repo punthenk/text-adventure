@@ -10,8 +10,14 @@
 
 using std::string;
 
-class Knife : public Item {
+class Vodka : public Item {
 public:
-    Knife();
+    Vodka();
+    void use(UseContext ctx) override;
+};
+
+class Medkit : public Item {
+public:
+    Medkit();
     void use(UseContext ctx) override;
 };

@@ -19,4 +19,5 @@ add_executable(game
     src/Inventory.cpp
     src/Knife.cpp
     src/Key.cpp
+    src/HealItems.cpp
 )

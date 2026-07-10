@@ -8,8 +8,9 @@
 #include "Player.h"
 #include "CommandType.h"
 
-Key::Key(int weight) : Item(weight) {
+Key::Key() {
     name = ItemType::Key;
+    weight = 1;
     description = "A key to open locked doors";
     use_guide = "To use this item type `use key direction` to unlock a locked room in that direction";
 }

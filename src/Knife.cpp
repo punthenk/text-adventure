@@ -8,8 +8,9 @@
 #include "Player.h"
 #include "CommandType.h"
 
-Knife::Knife(int weight) : Item(weight) {
+Knife::Knife() {
     name = ItemType::Knife;
+    weight = 1;
     description = "A knife you can hurt yourself with. So be careful! BUT if you're smart it can be used in a useful way ;)";
     use_guide = "To use this item, type `use knife`";
 }

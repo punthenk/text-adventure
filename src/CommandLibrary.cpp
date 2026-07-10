@@ -32,6 +32,8 @@ CommandLibrary::CommandLibrary() {
     // Items
     valid_items["knife"] = ItemType::Knife;
     valid_items["key"] = ItemType::Key;
+    valid_items["vodka"] = ItemType::Vodka;
+    valid_items["medkit"] = ItemType::Medkit;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {

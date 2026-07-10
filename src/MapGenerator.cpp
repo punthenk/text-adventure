@@ -9,6 +9,7 @@
 #include "Key.h"
 #include "Knife.h"
 #include "MapView.h"
+#include "HealItems.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
     max_amount_of_rooms = 10;
@@ -18,10 +19,15 @@ Room* MapGenerator::generate() {
     Room* start = new Room("test", false);
     grid[{0, 0}] = start;
 
-    Item* knife = new Knife(1);
-    Item* key = new Key(1);
+    Item* knife = new Knife();
+    Item* key = new Key();
+    Item* vodka = new Vodka();
+    Item* medkit = new Medkit();
+
     start->chest.put(ItemType::Knife, knife);
     start->chest.put(ItemType::Key, key);
+    start->chest.put(ItemType::Vodka, vodka);
+    start->chest.put(ItemType::Medkit, medkit);
 
     generateRooms(0, grid_height - 1, start);
 
@@ -88,13 +94,22 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             bool this_freely_reachable = parent_freely_reachable && !room_is_locked;
             freely_reachable[neighbor_room] = this_freely_reachable;
 
+            // Add items
             if (chance(rng) < 0.25) {
-                Item* knife = new Knife(1);
+                Item* knife = new Knife();
                 neighbor_room->chest.put(ItemType::Knife, knife);
+            }
+            if (chance(rng) < 0.12) {
+                Item* vodka = new Vodka();
+                neighbor_room->chest.put(ItemType::Vodka, vodka);
+            }
+            if (chance(rng) < 0.06) {
+                Item* medkit = new Medkit();
+                neighbor_room->chest.put(ItemType::Medkit, medkit);
             }
 
             if (this_freely_reachable && chance(rng) < 0.5) {
-                Item* key = new Key(1);
+                Item* key = new Key();
                 neighbor_room->chest.put(ItemType::Key, key);
                 spare_keys++;
             }

@@ -30,8 +30,16 @@ void Player::setCurrentRoom(Room *room) {
     current_room->markVisited();
 }
 
-void Player::damage(int damage) {
-    health -= damage;
+void Player::damage(int amount) {
+    health -= amount;
+}
+
+void Player::heal(int amount) {
+    health += amount;
+    if (health > 100) {
+        health = 100;
+    }
+    std::cout << "Your health is now " << health << "/100" << std::endl;
 }
 
 bool Player::setItemInInventory(ItemType item_type, Item* item) {
