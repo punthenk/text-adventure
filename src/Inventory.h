@@ -27,8 +27,6 @@ public:
 private:
     // TODO: Implement Inventory weight
     int max_weight;
-    // TODO: Have two of the same items in the inventory
-    // FIXME: Make sure the Item* is deleted from the heap when using a one time item
     std::map<ItemType, std::vector<std::unique_ptr<Item>>> items;
 
 
