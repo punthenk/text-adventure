@@ -4,6 +4,13 @@ project(game)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
+include(FetchContent)
+FetchContent_Declare(
+        json
+        URL https://github.com/nlohmann/json/releases/download/v3.12.0/json.tar.xz
+)
+FetchContent_MakeAvailable(json)
+
 add_executable(game
     src/main.cpp
     src/Command.cpp
@@ -21,6 +28,8 @@ add_executable(game
     src/items/Key.cpp
     src/items/HealItems.cpp
     src/core/Console.cpp
+    src/SaveGame.cpp
 )
 
 target_include_directories(game PRIVATE src)
+target_link_libraries(game PRIVATE nlohmann_json::nlohmann_json)
