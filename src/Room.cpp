@@ -65,13 +65,14 @@ bool Room::getIsVisited() const {
     return is_visited;
 }
 
-void Room::unlock() {
+bool Room::unlock() {
     if (is_locked) {
         is_locked = false;
-        Console::printLine("The room is unlocked!");
-        return;
+        Console::printSuccessLine("The room is unlocked!");
+        return true;
     }
-    Console::printLine("This room is already open!");
+    Console::printWarningLine("This room is already open!");
+    return false;
 }
 
 bool Room::hasKeyInChest() {

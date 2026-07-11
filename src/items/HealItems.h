@@ -13,11 +13,11 @@ using std::string;
 class Vodka : public Item {
 public:
     Vodka();
-    UseResult use(UseContext ctx) override;
+    bool use(UseContext ctx) override;
 };
 
 class Medkit : public Item {
 public:
     Medkit();
-    UseResult use(UseContext ctx) override;
+    bool use(UseContext ctx) override;
 };

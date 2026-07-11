@@ -4,9 +4,9 @@
  */
 
 #include "HealItems.h"
-#include <iostream>
 #include "Player.h"
 #include "CommandType.h"
+#include "core/Console.h"
 
 // Vodka
 Vodka::Vodka() {
@@ -17,10 +17,10 @@ Vodka::Vodka() {
     is_one_time_use = true;
 }
 
-UseResult Vodka::use(UseContext ctx) {
+bool Vodka::use(UseContext ctx) {
     ctx.player->heal(30);
-    std::cout << "Yeah, very good stuff..." << std::endl;
-    return {.success = true};
+    Console::printSuccessLine("Yeah, very good stuff...");
+    return true;
 }
 
 // Medkit
@@ -32,8 +32,8 @@ Medkit::Medkit() {
     is_one_time_use = true;
 }
 
-UseResult Medkit::use(UseContext ctx) {
+bool Medkit::use(UseContext ctx) {
     ctx.player->heal(50);
-    std::cout << "Pffeewh, that's better." << std::endl;
-    return {.success = true};
+    Console::printSuccessLine("Pffeewh, that's better.");
+    return true;
 }

@@ -15,25 +15,20 @@ using std::string;
 
 struct UseContext {
     Player* player;
-    Direction direction = {};
-};
-
-struct UseResult {
-    bool success;
-    bool consume;
+    std::optional<Direction> direction;
 };
 
 class Item {
 public:
     Item() = default;
     virtual ~Item() = default;
-    virtual UseResult use(UseContext ctx) = 0;
+    virtual bool use(UseContext ctx) = 0;
 
     ItemType getName() const { return name; }
     int getWeight() const { return weight; }
     const string& getDescription() const { return description; }
     const string& getUseGuide() const { return use_guide; }
-    const bool isOneTimeUse() const { return is_one_time_use; }
+    bool isOneTimeUse() const { return is_one_time_use; }
 
 protected:
     ItemType name;

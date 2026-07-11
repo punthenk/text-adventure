@@ -4,7 +4,6 @@
  */
 
 #include "Knife.h"
-#include <iostream>
 #include "Player.h"
 #include "CommandType.h"
 #include "core/Console.h"
@@ -17,12 +16,8 @@ Knife::Knife() {
     is_one_time_use = false;
 }
 
-UseResult Knife::use(UseContext ctx) {
+bool Knife::use(UseContext ctx) {
     ctx.player->damage(20);
-    Console::printWarningLine("OUCH! You attacked yourself!");
-
-    return {
-        .success = true,
-        .consume = false
-    };
+    Console::printDangerLine("OUCH! You attacked yourself!");
+    return true;
 }

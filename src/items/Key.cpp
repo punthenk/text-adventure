@@ -4,7 +4,6 @@
  */
 
 #include "Key.h"
-#include <iostream>
 #include "Player.h"
 #include "CommandType.h"
 #include "core/Console.h"
@@ -17,21 +16,28 @@ Key::Key() {
     is_one_time_use = true;
 }
 
-UseResult Key::use(UseContext ctx) {
-    if (ctx.direction == Direction::NotSet) {
-        Console::printWarningLine("Use where?");
-        return {.success = false};
-    } else if (ctx.direction == Direction::Unknown) {
-        Console::printWarningLine("That is not a valid direction!");
-        return {.success = false};
+bool Key::use(UseContext ctx) {
+    if (ctx.direction.has_value()) {
+        if (ctx.direction == Direction::NotSet) {
+            Console::printWarningLine("Use where?");
+            return false;
+        } else if (ctx.direction == Direction::Unknown) {
+            Console::printWarningLine("That is not a valid direction!");
+            return false;
+        }
+    } else {
+        Console::printWarningLine("Which direction?");
+        return false;
     }
 
-    Room* room_to_open = ctx.player->current_room->getExit(ctx.direction);
+    Room* room_to_open = ctx.player->current_room->getExit(ctx.direction.value());
     if (room_to_open == nullptr) {
         Console::printWarningLine("In that direction, no room exits...");
-        return { .success  = false };
+        return false;
     }
 
-    room_to_open->unlock();
-    return { .success = true };
+    if (room_to_open->unlock())
+        return true;
+
+    return false;
 }

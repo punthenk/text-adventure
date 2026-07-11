@@ -24,7 +24,7 @@ public:
     std::map<Direction, Room*>& getExits();
     void markVisited();
     bool getIsVisited() const;
-    void unlock();
+    bool unlock();
     Inventory chest{9999};
 
     // TEMPORARY:

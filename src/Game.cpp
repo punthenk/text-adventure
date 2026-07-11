@@ -125,9 +125,9 @@ void Game::useItem(Command command) {
 
     ctx.player = &player;
 
-    UseResult result = item->use(ctx);
+    bool use_success = item->use(ctx);
 
-    if (result.success && result.consume)
+    if (use_success && item->isOneTimeUse())
         player.backpack.remove(command.item);
 }
 

@@ -19,6 +19,14 @@ void Console::printWarningLine(const string &text) {
     std::cout << Color::Yellow << text << Color::Reset << '\n';
 }
 
+void Console::printDangerLine(const string &text) {
+    std::cout << Color::Red << text << Color::Reset << '\n';
+}
+
+void Console::printSuccessLine(const string &text) {
+    std::cout << Color::Green << text << Color::Reset << '\n';
+}
+
 void Console::typeLine(const string &text, int delay_ms) {
     const int microseconds = 1000;
     std::vector<char> chars(text.begin(), text.end());
