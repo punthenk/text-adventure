@@ -32,7 +32,7 @@ Item* Inventory::get(ItemType item_type) {
     if (it == items.end())
         return nullptr;
 
-    return it->second.front().get();
+    return it->second.back().get();
 }
 
 std::unique_ptr<Item> Inventory::take(ItemType item_type) {
