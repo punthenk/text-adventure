@@ -49,13 +49,11 @@ std::unique_ptr<Item> Inventory::take(ItemType item_type) {
     return item;
 }
 
-// TODO: Do a .find instead of a foreach loop
 bool Inventory::checkIfItemIsAvailable(ItemType item_type) {
-    for (const auto& item : items) {
-        if (item.first == item_type) {
-            return true;
-        }
-    }
+    auto it = items.find(item_type);
+    if (it != items.end())
+        return true;
+
     return false;
 }
 
