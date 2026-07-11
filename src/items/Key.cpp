@@ -16,7 +16,7 @@ Key::Key() {
     is_one_time_use = true;
 }
 
-void Key::use(UseContext ctx) {
+UseResult Key::use(UseContext ctx) {
     Room* room_to_open = ctx.player->current_room->getExit(ctx.direction);
     if (room_to_open == nullptr) {
         std::cout << "In that direction, no room exits..." << std::endl;

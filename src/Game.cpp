@@ -22,7 +22,7 @@ Game::Game() {
 
 void Game::play() {
     bool finished = false;
-    printWelcome();
+    // printWelcome();
 
     while (!finished && player.isAlive()) {
         Command command = parser.getCommand();
@@ -119,28 +119,24 @@ void Game::useItem(Command command) {
         return;
     }
 
-    if (command.item == ItemType::Key) {
-        if (!command.hasDirection()) {
-            Console::printLine("Use where?");
-            return;
-        } else if (!command.hasValidDirection()) {
-            Console::printLine("That is not a valid direction!");
-            return;
-        }
+    if (command.hasDirection())
+        ctx.direction = command.direction;
 
-        Direction direction = command.direction;
-        ctx.direction = direction;
-    }
+    Player *player_ptr = &player;
+    ctx.player = player_ptr;
 
+    // FIXME: Item deleted when not used successfully
+    UseResult result = item->use(ctx);
 
     Player *player_pointer = &player;
     ctx.player = player_pointer;
     item->use(ctx);
 
     // FIXME: Item deleted when not used successfully
-    if (item->isOneTimeUse()) {
-        player.backpack.removeItem(command.item);
-        delete item;
+    if (result.success && result.consume) {
+        player.backpack.take(command.item);
+    } else if (!result.success) {
+        Console::printLine(result.message);
     }
 }
 
@@ -167,9 +163,7 @@ void Game::dropItem(Command command) {
         return;
     }
 
-    ItemType item_type = command.item;
-
-    player.dropToChest(item_type);
+    player.dropToChest(command.item);
 }
 
 void Game::createRooms() {

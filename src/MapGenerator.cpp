@@ -19,15 +19,10 @@ Room* MapGenerator::generate() {
     Room* start = new Room("in the first test room", false);
     grid[{0, 0}] = start;
 
-    Item* knife = new Knife();
-    Item* key = new Key();
-    Item* vodka = new Vodka();
-    Item* medkit = new Medkit();
-
-    start->chest.put(ItemType::Knife, knife);
-    start->chest.put(ItemType::Key, key);
-    start->chest.put(ItemType::Vodka, vodka);
-    start->chest.put(ItemType::Medkit, medkit);
+    start->chest.put(ItemType::Knife, std::make_unique<Knife>());
+    start->chest.put(ItemType::Key, std::make_unique<Key>());
+    start->chest.put(ItemType::Vodka, std::make_unique<Vodka>());
+    start->chest.put(ItemType::Medkit, std::make_unique<Medkit>());
 
     generateRooms(0, grid_height - 1, start);
 
@@ -96,21 +91,17 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
 
             // Add items
             if (chance(rng) < 0.25) {
-                Item* knife = new Knife();
-                neighbor_room->chest.put(ItemType::Knife, knife);
+                neighbor_room->chest.put(ItemType::Knife, std::make_unique<Knife>());
             }
             if (chance(rng) < 0.12) {
-                Item* vodka = new Vodka();
-                neighbor_room->chest.put(ItemType::Vodka, vodka);
+                neighbor_room->chest.put(ItemType::Vodka, std::make_unique<Vodka>());
             }
             if (chance(rng) < 0.06) {
-                Item* medkit = new Medkit();
-                neighbor_room->chest.put(ItemType::Medkit, medkit);
+                neighbor_room->chest.put(ItemType::Medkit, std::make_unique<Medkit>());
             }
 
             if (this_freely_reachable && chance(rng) < 0.5) {
-                Item* key = new Key();
-                neighbor_room->chest.put(ItemType::Key, key);
+                neighbor_room->chest.put(ItemType::Key, std::make_unique<Key>());
                 spare_keys++;
             }
 

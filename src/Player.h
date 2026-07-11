@@ -17,7 +17,7 @@ public:
     void setCurrentRoom(Room* room);
     void damage(int amount);
     void heal(int amount);
-    bool setItemInInventory(ItemType item_type, Item* item); // Temporary
+    void setItemInInventory(ItemType item_type, Item* item); // Temporary
 
     bool takeFromChest(ItemType item_type);
     bool dropToChest(ItemType item_type);

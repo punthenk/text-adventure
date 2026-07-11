@@ -16,7 +16,12 @@ Knife::Knife() {
     is_one_time_use = false;
 }
 
-void Knife::use(UseContext ctx) {
+UseResult Knife::use(UseContext ctx) {
     ctx.player->damage(20);
     std::cout << "OUCH! You attacked yourself!" << std::endl;
+
+    return {
+        .success = true,
+        .consume = false
+    };
 }

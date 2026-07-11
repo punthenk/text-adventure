@@ -13,5 +13,5 @@ using std::string;
 class Key : public Item {
 public:
     Key();
-    void use(UseContext ctx) override;
+    UseResult use(UseContext ctx) override;
 };

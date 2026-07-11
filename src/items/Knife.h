@@ -13,5 +13,5 @@ using std::string;
 class Knife : public Item {
 public:
     Knife();
-    void use(UseContext ctx) override;
+    UseResult use(UseContext ctx) override;
 };

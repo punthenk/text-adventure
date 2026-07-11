@@ -43,8 +43,9 @@ void Player::heal(int amount) {
     Console::printLine("Your health is now " + std::to_string(health) + "/100");
 }
 
-bool Player::setItemInInventory(ItemType item_type, Item* item) {
-    return backpack.put(item_type, item);
+void Player::setItemInInventory(ItemType item_type, Item* item) {
+    std::unique_ptr<Item> item_unique_ptr(item);
+    backpack.put(item_type, std::move(item_unique_ptr));
 }
 
 bool Player::takeFromChest(ItemType item_type) {
@@ -54,14 +55,10 @@ bool Player::takeFromChest(ItemType item_type) {
         return false;
     }
 
-    if (backpack.put(item_type, item)) {
-        current_room->chest.removeItem(item_type);
-        Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is put in your backpack!");
-        return true;
-    }
+    backpack.put(item_type, current_room->chest.take(item_type));
+    Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is put in your backpack!");
 
-    Console::printLine("There went something wrong tyring to put the item in your backpack :(");
-    return false;
+    return true;
 }
 
 bool Player::dropToChest(ItemType item_type) {
@@ -70,11 +67,9 @@ bool Player::dropToChest(ItemType item_type) {
     if (current_room->chest.checkIfItemIsAvailable(item_type)) {
         Console::printLine("This item cannot be dropped in this room!");
     } else if (item != nullptr) {
-        if (current_room->chest.put(item_type, item)) {
-            backpack.removeItem(item_type);
-            Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
-            return true;
-        }
+        current_room->chest.put(item_type, backpack.take(item_type));
+        Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
+        return true;
     } else {
         Console::printLine(CommandLibrary::itemToString(item_type) + " is not in your backpack!");
     }
