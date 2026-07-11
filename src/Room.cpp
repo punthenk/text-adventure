@@ -18,15 +18,8 @@ bool Room::getIsLocked() {
     return is_locked;
 }
 
-string Room::getShortDescription() {
+string Room::getDescription() {
     return description;
-}
-
-string Room::getLongDescription() {
-    string str = "You are ";
-    str += description + ".\n";
-    str += getExitString();
-    return str;
 }
 
 void Room::addExit(const Direction &direction, Room* neighbor) {
@@ -42,7 +35,7 @@ Room* Room::getExit(const Direction& direction) {
 }
 
 string Room::getExitString() {
-    string str = "Exits: ";
+    string str = "";
     bool first = true;
     for (const auto& [key, value] : exits) {
         if (!first)

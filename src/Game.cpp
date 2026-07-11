@@ -28,7 +28,7 @@ void Game::play() {
         Command command = parser.getCommand();
         finished = processCommand(command);
     }
-    Console::printLine("Bye");
+    Console::typeLine("Bye", 50);
 }
 
 void Game::printWelcome() {
@@ -37,7 +37,7 @@ void Game::printWelcome() {
     Console::typeLine("To begin, type `help` if you need any help");
     Console::typeLine("You goal is to exit the facility and survive!");
     Console::typeLine("GOOD LUCK!\n");
-    Console::typeLine(player.current_room->getLongDescription());
+    Console::typeLine(player.current_room->getDescription());
 }
 
 void Game::printHelp(Command command) {
@@ -47,41 +47,50 @@ void Game::printHelp(Command command) {
         parser.printValidCommands();
         return;
     } else if (!command.hasValidItem()) {
-        Console::printLine("We don't support help for that item");
+        Console::printWarningLine("We don't support help for that item");
         return;
     }
 
-    Console::printLine("ITEM HELP");
+    Console::printSuccessLine("ITEM HELP");
     Console::printLine("------------------------");
 
     Item* item = player.backpack.get(command.item);
     if (item != nullptr) {
-        Console::printLine("Name: " + CommandLibrary::itemToString(item->getName()));
-        Console::printLine("Description: " + item->getDescription());
-        Console::printLine("Guide: " + item->getUseGuide());
-        Console::printLine("Weight: " + std::to_string(item->getWeight()));
+        Console::printInfo("Name: ");
+        Console::printSuccessLine(CommandLibrary::itemToString(item->getName()));
+        Console::printInfo("Description: ");
+        Console::printSuccessLine(item->getDescription());
+        Console::printInfo("Guide: ");
+        Console::printSuccessLine(item->getUseGuide());
+        Console::printInfo("Weight: ");
+        Console::printSuccessLine(std::to_string(item->getWeight()));
     } else {
-        Console::printLine("You need to have that item in your backpack to ask help");
+        Console::printWarningLine("You need to have that item in your backpack to ask help");
     }
 }
 
 void Game::status() {
-    Console::printLine("Your health is " + std::to_string(player.getHealth()) + "/100");
+    Console::printInfo("Your health is ");
+    Console::printSuccessLine(std::to_string(player.getHealth()) + "/100");
     Console::printLine("----------------------");
-    Console::printLine("Your inventory: " + player.backpack.listItems());
+    Console::printInfo("Your inventory: ");
+    Console::printSuccessLine(player.backpack.listItems());
 }
 
 void Game::look() {
-    Console::printLine(player.current_room->getLongDescription());
-    Console::printLine("Items: " + player.current_room->chest.listItems());
+    Console::printLine("You are " + player.current_room->getDescription());
+    Console::printInfo("Exits: ");
+    Console::printWarningLine(player.current_room->getExitString());
+    Console::printInfo("Items: ");
+    Console::printSuccessLine(player.current_room->chest.listItems());
 }
 
 void Game::goRoom(Command command) {
     if (!command.hasDirection()) {
-        Console::printLine("Go where?");
+        Console::printWarningLine("Go where?");
         return;
     } else if (!command.hasValidDirection()) {
-        Console::printLine("That is not a valid direction!");
+        Console::printWarningLine("That is not a valid direction!");
         return;
     }
 
@@ -89,32 +98,36 @@ void Game::goRoom(Command command) {
 
     Room* next_room = player.current_room->getExit(dir);
     if (next_room == nullptr) {
-        Console::printLine("There is not exit found in that direction!");
+        Console::printWarningLine("There is no exit found in that direction!");
         return;
     }
 
     if (!next_room->getIsLocked()) {
         player.setCurrentRoom(next_room);
         player.damage(10);
-        Console::printLine(player.current_room->getLongDescription());
+        Console::typeLine(player.current_room->getDescription());
+        Console::printInfo("Exits: ");
+        Console::printSuccessLine(player.current_room->getExitString());
+        Console::printInfo("Items: ");
+        Console::printSuccessLine(player.current_room->chest.listItems());
     } else {
-        Console::printLine("The room you want to enter is locked");
+        Console::printWarningLine("The room you want to enter is locked");
     }
 }
 
 void Game::useItem(Command command) {
     if (!command.hasItem()) {
-        Console::printLine("What item?");
+        Console::printWarningLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        Console::printLine("That is not a valid item!");
+        Console::printWarningLine("That is not a valid item!");
         return;
     }
 
     Item* item = player.backpack.get(command.item);
 
     if (item == nullptr) {
-        Console::printLine("The item was not found in your backpack!");
+        Console::printWarningLine("The item was not found in your backpack!");
         return;
     }
 
@@ -133,10 +146,10 @@ void Game::useItem(Command command) {
 
 void Game::takeItem(Command command) {
     if (!command.hasItem()) {
-        Console::printLine("What item?");
+        Console::printWarningLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        Console::printLine("That is not a valid item!");
+        Console::printWarningLine("That is not a valid item!");
         return;
     }
 
@@ -147,10 +160,10 @@ void Game::takeItem(Command command) {
 
 void Game::dropItem(Command command) {
     if (!command.hasItem()) {
-        Console::printLine("What item?");
+        Console::printWarningLine("What item?");
         return;
     } else if (!command.hasValidItem()) {
-        Console::printLine("That is not a valid item!");
+        Console::printWarningLine("That is not a valid item!");
         return;
     }
 
@@ -208,11 +221,11 @@ bool Game::processCommand(Command command) {
             break;
         }
         case CommandType::Unknown: {
-            Console::printLine("I have no clue what you want...");
+            Console::printWarningLine("I have no clue what you want...");
             break;
         }
         default: {
-            Console::printLine("I have no clue what you want...");
+            Console::printWarningLine("I have no clue what you want...");
         }
     }
 

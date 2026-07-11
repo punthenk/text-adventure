@@ -40,7 +40,8 @@ void Player::heal(int amount) {
     if (health > 100) {
         health = 100;
     }
-    Console::printLine("Your health is now " + std::to_string(health) + "/100");
+    Console::printInfo("Your health is now ");
+    Console::printSuccessLine(std::to_string(health) + "/100");
 }
 
 void Player::setItemInInventory(ItemType item_type, Item* item) {
@@ -51,12 +52,12 @@ void Player::setItemInInventory(ItemType item_type, Item* item) {
 bool Player::takeFromChest(ItemType item_type) {
     Item* item = current_room->chest.get(item_type);
     if (item == nullptr) {
-        Console::printLine("The thing you want to pick up does not exist!");
+        Console::printWarningLine("The thing you want to pick up does not exist!");
         return false;
     }
 
     backpack.put(item_type, current_room->chest.take(item_type));
-    Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is put in your backpack!");
+    Console::printSuccessLine("The " + CommandLibrary::itemToString(item_type) + " is put in your backpack!");
 
     return true;
 }
@@ -66,10 +67,10 @@ bool Player::dropToChest(ItemType item_type) {
 
     if (item != nullptr) {
         current_room->chest.put(item_type, backpack.take(item_type));
-        Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
+        Console::printSuccessLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
         return true;
     } else {
-        Console::printLine(CommandLibrary::itemToString(item_type) + " is not in your backpack!");
+        Console::printWarningLine(CommandLibrary::itemToString(item_type) + " is not in your backpack!");
     }
 
     return false;

@@ -67,6 +67,6 @@ Command Parser::getCommand() {
 }
 
 void Parser::printValidCommands() {
-    Console::printLine("You commands are:");
-    Console::printLine(command_library.getCommandsString());
+    Console::printInfo("You commands are: ");
+    Console::printSuccessLine(command_library.getCommandsString());
 }

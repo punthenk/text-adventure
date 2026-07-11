@@ -16,8 +16,7 @@ class Room {
 public:
     Room(string desc, bool roomIsLocked);
     bool getIsLocked();
-    string getShortDescription();
-    string getLongDescription();
+    string getDescription();
     void addExit(const Direction &direction, Room* neighbor);
     Room* getExit(const Direction &direction);
     string getExitString();
