@@ -52,3 +52,22 @@ void SaveGame::save(const SaveData &data) {
     file_stream << j.dump(4);
 }
 
+std::optional<SaveData> SaveGame::load() {
+    if (!hasSaveFile())
+        return std::nullopt;
+
+    const string& file_name = "save.json";
+    std::filesystem::path path = getSaveDirectory() / file_name;
+
+    std::ifstream file_stream{path};
+    nlohmann::json j;
+    file_stream >> j;
+
+    try {
+        return j.get<SaveData>();
+    } catch (nlohmann::json::exception) {
+        std::cout << "Error retrieving game data\n";
+        return std::nullopt;
+    }
+}
+
