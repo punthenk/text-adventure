@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Player.h"
 #include "CommandType.h"
+#include "core/Console.h"
 
 Key::Key() {
     name = ItemType::Key;
@@ -17,11 +18,20 @@ Key::Key() {
 }
 
 UseResult Key::use(UseContext ctx) {
+    if (ctx.direction == Direction::NotSet) {
+        Console::printWarningLine("Use where?");
+        return {.success = false};
+    } else if (ctx.direction == Direction::Unknown) {
+        Console::printWarningLine("That is not a valid direction!");
+        return {.success = false};
+    }
+
     Room* room_to_open = ctx.player->current_room->getExit(ctx.direction);
     if (room_to_open == nullptr) {
-        std::cout << "In that direction, no room exits..." << std::endl;
-        return;
+        Console::printWarningLine("In that direction, no room exits...");
+        return { .success  = false };
     }
 
     room_to_open->unlock();
+    return { .success = true };
 }

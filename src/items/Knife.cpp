@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Player.h"
 #include "CommandType.h"
+#include "core/Console.h"
 
 Knife::Knife() {
     name = ItemType::Knife;
@@ -18,7 +19,7 @@ Knife::Knife() {
 
 UseResult Knife::use(UseContext ctx) {
     ctx.player->damage(20);
-    std::cout << "OUCH! You attacked yourself!" << std::endl;
+    Console::printWarningLine("OUCH! You attacked yourself!");
 
     return {
         .success = true,

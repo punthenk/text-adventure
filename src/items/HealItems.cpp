@@ -17,9 +17,10 @@ Vodka::Vodka() {
     is_one_time_use = true;
 }
 
-void Vodka::use(UseContext ctx) {
+UseResult Vodka::use(UseContext ctx) {
     ctx.player->heal(30);
     std::cout << "Yeah, very good stuff..." << std::endl;
+    return {.success = true};
 }
 
 // Medkit
@@ -31,7 +32,8 @@ Medkit::Medkit() {
     is_one_time_use = true;
 }
 
-void Medkit::use(UseContext ctx) {
+UseResult Medkit::use(UseContext ctx) {
     ctx.player->heal(50);
     std::cout << "Pffeewh, that's better." << std::endl;
+    return {.success = true};
 }

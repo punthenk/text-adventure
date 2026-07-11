@@ -20,11 +20,12 @@ public:
     void put(ItemType item_type, std::unique_ptr<Item> item);
     Item* get(ItemType item_type);
     std::unique_ptr<Item> take(ItemType item_type);
-    bool removeItem(ItemType item_type);
+    bool remove(ItemType item_type);
     bool checkIfItemIsAvailable(ItemType item_type);
     string listItems();
 
 private:
+    // TODO: Implement Inventory weight
     int max_weight;
     // TODO: Have two of the same items in the inventory
     // FIXME: Make sure the Item* is deleted from the heap when using a one time item

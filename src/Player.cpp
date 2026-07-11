@@ -64,9 +64,7 @@ bool Player::takeFromChest(ItemType item_type) {
 bool Player::dropToChest(ItemType item_type) {
     Item* item = backpack.get(item_type);
 
-    if (current_room->chest.checkIfItemIsAvailable(item_type)) {
-        Console::printLine("This item cannot be dropped in this room!");
-    } else if (item != nullptr) {
+    if (item != nullptr) {
         current_room->chest.put(item_type, backpack.take(item_type));
         Console::printLine("The " + CommandLibrary::itemToString(item_type) + " is dropped in the room!");
         return true;

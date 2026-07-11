@@ -112,32 +112,23 @@ void Game::useItem(Command command) {
     }
 
     Item* item = player.backpack.get(command.item);
-    UseContext ctx{};
 
     if (item == nullptr) {
         Console::printLine("The item was not found in your backpack!");
         return;
     }
 
+    UseContext ctx{};
+
     if (command.hasDirection())
         ctx.direction = command.direction;
 
-    Player *player_ptr = &player;
-    ctx.player = player_ptr;
+    ctx.player = &player;
 
-    // FIXME: Item deleted when not used successfully
     UseResult result = item->use(ctx);
 
-    Player *player_pointer = &player;
-    ctx.player = player_pointer;
-    item->use(ctx);
-
-    // FIXME: Item deleted when not used successfully
-    if (result.success && result.consume) {
-        player.backpack.take(command.item);
-    } else if (!result.success) {
-        Console::printLine(result.message);
-    }
+    if (result.success && result.consume)
+        player.backpack.remove(command.item);
 }
 
 void Game::takeItem(Command command) {

@@ -15,13 +15,12 @@ using std::string;
 
 struct UseContext {
     Player* player;
-    std::optional<Direction> direction;
+    Direction direction = {};
 };
 
 struct UseResult {
     bool success;
     bool consume;
-    string message;
 };
 
 class Item {

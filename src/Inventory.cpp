@@ -13,14 +13,17 @@ void Inventory::put(ItemType item_type, std::unique_ptr<Item> item) {
     items[item_type].push_back(std::move(item));
 }
 
-bool Inventory::removeItem(ItemType item_type) {
-    for (const auto& item : items) {
-        if (item.first == item_type) {
-            items.erase(item.first);
-            return true;
-        }
-    }
-    return false;
+bool Inventory::remove(ItemType item_type) {
+    auto it = items.find(item_type);
+    if (it == items.end() || it->second.empty())
+        return false;
+
+    it->second.pop_back();
+
+    if (it->second.empty())
+        items.erase(it);
+
+    return true;
 }
 
 
@@ -63,8 +66,8 @@ string Inventory::listItems() {
         if (!first)
             str += ", ";
         str += CommandLibrary::itemToString(item.first);
-        if (item.second.amount > 1) {
-            str += '(' + std::to_string(item.second.amount) + ')';
+        if (item.second.size() > 1) {
+            str += '(' + std::to_string(item.second.size()) + ')';
         }
         first = false;
     }
