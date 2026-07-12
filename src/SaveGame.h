@@ -15,7 +15,7 @@ struct SaveData {
     unsigned int seed;
     int health;
     int current_room_id;
-    std::vector<ItemType> inventory_items;
+    std::map<ItemType, int> inventory_items;
 };
 
 void to_json(nlohmann::json& j, const SaveData& save);

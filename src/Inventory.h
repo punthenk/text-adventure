@@ -23,6 +23,7 @@ public:
     bool remove(ItemType item_type);
     bool checkIfItemIsAvailable(ItemType item_type);
     string listItems();
+    std::map<ItemType, int> getItemsForSave() const;
 
 private:
     // TODO: Implement Inventory weight

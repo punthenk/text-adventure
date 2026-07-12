@@ -71,3 +71,11 @@ string Inventory::listItems() {
     }
     return !str.empty() ? str : "is empty";
 }
+
+std::map<ItemType, int> Inventory::getItemsForSave() const {
+    std::map<ItemType, int> items_map;
+    for (auto& item : items) {
+        items_map[item.first] = item.second.size();
+    }
+    return items_map;
+}

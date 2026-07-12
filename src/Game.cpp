@@ -4,7 +4,6 @@
  */
 
 #include "Game.h"
-#include <iostream>
 #include "Canvas.h"
 #include "Command.h"
 #include "CommandType.h"
@@ -13,6 +12,8 @@
 #include "MapView.h"
 #include "core/Console.h"
 #include "SaveGame.h"
+#include "items/HealItems.h"
+#include "items/Key.h"
 
 Game::Game() {
     auto save_data = SaveGame::load();
@@ -182,7 +183,7 @@ void Game::saveGame() {
         .seed = *seed,
         .health = player.getHealth(),
         .current_room_id = player.current_room->getRoomId(),
-        .inventory_items = {ItemType::Knife},
+        .inventory_items = player.backpack.getItemsForSave(),
     };
     SaveGame::save(data);
 }
@@ -191,6 +192,17 @@ void Game::loadGame(SaveData& save_data) {
     Console::printWarningLine("LOAD THE SAVE_GAME_FILE");
     player.setHealth(save_data.health);
     seed = save_data.seed;
+    for (auto& item : save_data.inventory_items) {
+        for (int i = 0; i < item.second; i++) {
+            switch (item.first) {
+                case ItemType::Knife: player.backpack.put(ItemType::Knife, std::make_unique<Knife>());
+                case ItemType::Key: player.backpack.put(ItemType::Key, std::make_unique<Key>());
+                case ItemType::Medkit: player.backpack.put(ItemType::Medkit, std::make_unique<Medkit>());
+                case ItemType::Vodka: player.backpack.put(ItemType::Vodka, std::make_unique<Vodka>());
+                default: continue;
+            }
+        }
+    }
 }
 
 void Game::createRooms(std::optional<unsigned int> current_room_id) {
