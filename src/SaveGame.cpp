@@ -14,6 +14,7 @@ void to_json(nlohmann::json &j, const SaveData &save) {
     j = nlohmann::json{
         {"seed", save.seed},
         {"health", save.health},
+        {"current_room_id", save.current_room_id},
         {"inventory_items", save.inventory_items},
     };
 }
@@ -21,6 +22,7 @@ void to_json(nlohmann::json &j, const SaveData &save) {
 void from_json(const nlohmann::json &j, SaveData &save) {
     j.at("seed").get_to(save.seed);
     j.at("health").get_to(save.health);
+    j.at("current_room_id").get_to(save.current_room_id);
     j.at("inventory_items").get_to(save.inventory_items);
 }
 

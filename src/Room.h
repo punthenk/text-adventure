@@ -21,6 +21,7 @@ public:
     Room* getExit(const Direction &direction);
     string getExitString();
     std::map<Direction, Room*>& getExits();
+    int getRoomId() const;
     void markVisited();
     bool getIsVisited() const;
     bool unlock();
@@ -34,4 +35,5 @@ private:
     std::map<Direction, Room*> exits;
     bool is_locked = false;
     bool is_visited = false;
+    int id;
 };

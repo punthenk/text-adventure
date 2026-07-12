@@ -13,6 +13,7 @@ class MapGenerator {
 public:
     MapGenerator(unsigned int seed, int grid_width, int grid_height);
     Room* generate();
+    std::map<int, Room*> getRooms() const;
 
 private:
     std::mt19937 rng;
@@ -23,6 +24,7 @@ private:
     int max_amount_of_rooms;
     std::vector<Room*> active_rooms;
     std::map<Room*, std::pair<int, int>> active_positions;
+    std::map<int, Room*> rooms;
 
     void generateRooms(int x, int y, Room* current_room);
     Direction opposite(Direction dir);

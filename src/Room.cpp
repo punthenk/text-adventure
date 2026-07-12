@@ -12,6 +12,7 @@
 Room::Room(string desc, bool roomIsLocked) {
     description = desc;
     is_locked = roomIsLocked;
+    id = rand() % 1000;
 }
 
 bool Room::getIsLocked() {
@@ -48,6 +49,10 @@ string Room::getExitString() {
 
 std::map<Direction, Room *> & Room::getExits() {
     return exits;
+}
+
+int Room::getRoomId() const {
+    return id;
 }
 
 void Room::markVisited() {

@@ -13,6 +13,7 @@ public:
     Player();
     int getBackpackSpace();
     int getHealth();
+    void setHealth(int amount);
     bool isAlive();
     void setCurrentRoom(Room* room);
     void damage(int amount);

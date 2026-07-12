@@ -8,11 +8,13 @@
 #include <filesystem>
 #include "CommandType.h"
 #include <nlohmann/json.hpp>
+#include <optional>
 
 
 struct SaveData {
     unsigned int seed;
     int health;
+    int current_room_id;
     std::vector<ItemType> inventory_items;
 };
 

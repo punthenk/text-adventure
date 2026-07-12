@@ -29,6 +29,10 @@ Room* MapGenerator::generate() {
     return start;
 }
 
+std::map<int, Room *> MapGenerator::getRooms() const {
+    return rooms;
+}
+
 void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
     grid[{start_x, start_y}] = start_room;
     active_rooms.push_back(start_room);
@@ -112,6 +116,7 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             active_rooms.push_back(neighbor_room);
             active_positions[neighbor_room] = {nx, ny};
             created_rooms++;
+            rooms[neighbor_room->getRoomId()] = neighbor_room;
 
             found_valid_direction = true;
             break;

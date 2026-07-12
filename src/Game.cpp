@@ -12,9 +12,15 @@
 #include "MapGenerator.h"
 #include "MapView.h"
 #include "core/Console.h"
+#include "SaveGame.h"
 
 Game::Game() {
-    createRooms();
+    auto save_data = SaveGame::load();
+    if (save_data) {
+        loadGame(save_data.value());
+    }
+
+    createRooms(save_data->current_room_id);
 
     // Item* knife = new Knife(1, ItemType::Knife, "A knife");
     // player.setItemInInventory(ItemType::Knife, knife);
@@ -110,6 +116,7 @@ void Game::goRoom(Command command) {
         Console::printSuccessLine(player.current_room->getExitString());
         Console::printInfo("Items: ");
         Console::printSuccessLine(player.current_room->chest.listItems());
+        Console::printWarningLine(std::to_string(player.current_room->getRoomId()));
     } else {
         Console::printWarningLine("The room you want to enter is locked");
     }
@@ -170,13 +177,39 @@ void Game::dropItem(Command command) {
     player.dropToChest(command.item);
 }
 
-void Game::createRooms() {
-    // unsigned int seed = time(nullptr);
-    unsigned int seed = 1783697259; // Fun map :)!
-    srand(seed);
-    std::cerr << seed << std::endl;
-    MapGenerator map_generator = MapGenerator(seed, 15, 10);
+void Game::saveGame() {
+    SaveData data = {
+        .seed = *seed,
+        .health = player.getHealth(),
+        .current_room_id = player.current_room->getRoomId(),
+        .inventory_items = {ItemType::Knife},
+    };
+    SaveGame::save(data);
+}
+
+void Game::loadGame(SaveData& save_data) {
+    Console::printWarningLine("LOAD THE SAVE_GAME_FILE");
+    player.setHealth(save_data.health);
+    seed = save_data.seed;
+}
+
+void Game::createRooms(std::optional<unsigned int> current_room_id) {
+    if (!seed.has_value()) {
+        seed = time(nullptr);
+        // seed = 1783697259; // Fun map :)!
+    }
+    srand(seed.value());
+    Console::printWarningLine(std::to_string(seed.value()));
+    MapGenerator map_generator = MapGenerator(seed.value(), 15, 10);
     player.setCurrentRoom(map_generator.generate());
+
+    if (current_room_id.has_value()) {
+        auto rooms = map_generator.getRooms();
+        auto it = rooms.find(current_room_id.value());
+        if (it != rooms.end()) {
+            player.setCurrentRoom(rooms[current_room_id.value()]);
+        }
+    }
 }
 
 bool Game::processCommand(Command command) {
@@ -218,6 +251,10 @@ bool Game::processCommand(Command command) {
         }
         case CommandType::Drop: {
             dropItem(command);
+            break;
+        }
+        case CommandType::Save: {
+            saveGame();
             break;
         }
         case CommandType::Unknown: {

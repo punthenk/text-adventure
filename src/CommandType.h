@@ -17,6 +17,7 @@ enum class CommandType : std::uint8_t {
     Use,
     Take,
     Drop,
+    Save,
     Unknown,
 };
 

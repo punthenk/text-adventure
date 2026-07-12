@@ -22,6 +22,10 @@ int Player::getHealth() {
     return health;
 }
 
+void Player::setHealth(int amount) {
+    health = amount;
+}
+
 bool Player::isAlive() {
     return health > 0;
 }

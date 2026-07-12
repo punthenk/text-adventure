@@ -8,6 +8,8 @@
 #include "Parser.h"
 #include "Command.h"
 #include "Player.h"
+#include "SaveGame.h"
+#include <optional>
 
 class Game {
 public:
@@ -17,6 +19,7 @@ public:
 private:
     Parser parser;
     Player player;
+    std::optional<unsigned int> seed;
 
     bool processCommand(Command command);
     void printWelcome();
@@ -27,6 +30,7 @@ private:
     void useItem(Command command);
     void takeItem(Command command);
     void dropItem(Command command);
-
-    void createRooms();
+    void saveGame();
+    void loadGame(SaveData& save_data);
+    void createRooms(std::optional<unsigned int> current_room_id = std::nullopt);
 };
