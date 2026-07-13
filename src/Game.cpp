@@ -194,13 +194,7 @@ void Game::loadGame(SaveData& save_data) {
     seed = save_data.seed;
     for (auto& item : save_data.inventory_items) {
         for (int i = 0; i < item.second; i++) {
-            switch (item.first) {
-                case ItemType::Knife: player.backpack.put(ItemType::Knife, std::make_unique<Knife>());
-                case ItemType::Key: player.backpack.put(ItemType::Key, std::make_unique<Key>());
-                case ItemType::Medkit: player.backpack.put(ItemType::Medkit, std::make_unique<Medkit>());
-                case ItemType::Vodka: player.backpack.put(ItemType::Vodka, std::make_unique<Vodka>());
-                default: continue;
-            }
+            player.backpack.add(item.first);
         }
     }
 }

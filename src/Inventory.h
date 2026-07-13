@@ -20,6 +20,7 @@ public:
     void put(ItemType item_type, std::unique_ptr<Item> item);
     Item* get(ItemType item_type);
     std::unique_ptr<Item> take(ItemType item_type);
+    void add(ItemType item_type);
     bool remove(ItemType item_type);
     bool checkIfItemIsAvailable(ItemType item_type);
     string listItems();

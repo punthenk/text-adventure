@@ -5,6 +5,9 @@
 
 #include "Inventory.h"
 #include "CommandLibrary.h"
+#include "items/HealItems.h"
+#include "items/Key.h"
+#include "items/Knife.h"
 
 Inventory::Inventory(int max_weight) : max_weight(max_weight) {
 }
@@ -47,6 +50,16 @@ std::unique_ptr<Item> Inventory::take(ItemType item_type) {
         items.erase(it);
 
     return item;
+}
+
+void Inventory::add(ItemType item_type) {
+    switch (item_type) {
+        case ItemType::Knife: put(ItemType::Knife, std::make_unique<Knife>()); return;
+        case ItemType::Key: put(ItemType::Key, std::make_unique<Key>()); return;
+        case ItemType::Vodka: put(ItemType::Vodka, std::make_unique<Vodka>()); return;
+        case ItemType::Medkit: put(ItemType::Medkit, std::make_unique<Medkit>()); return;
+        default: return;
+    }
 }
 
 bool Inventory::checkIfItemIsAvailable(ItemType item_type) {
