@@ -35,6 +35,10 @@ void Game::play() {
         Command command = parser.getCommand();
         finished = processCommand(command);
     }
+
+    if (!player.isAlive())
+        SaveGame::deleteSaveFile();
+
     Console::typeLine("Bye", 50);
 }
 

@@ -40,6 +40,15 @@ bool SaveGame::hasSaveFile() {
     return std::filesystem::exists(path);
 }
 
+bool SaveGame::deleteSaveFile() {
+    std::filesystem::path path = getSaveDirectory() / "save.json";
+    if (std::filesystem::remove(path)) {
+        return true;
+    }
+    perror("Error while removing save game file");
+    return false;
+}
+
 void SaveGame::save(const SaveData &data) {
     const string& file_name = "save.json";
     std::filesystem::path path = getSaveDirectory() / file_name;

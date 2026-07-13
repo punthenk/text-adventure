@@ -26,6 +26,7 @@ public:
     static std::filesystem::path getSaveDirectory();
     static bool hasSaveFile();
 
+    static bool deleteSaveFile();
     static void save(const SaveData& data);
     static std::optional<SaveData> load();
 };
