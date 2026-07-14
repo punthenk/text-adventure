@@ -41,6 +41,12 @@ Command Parser::getCommand() {
     command_strings.push_back(input);
 
     command.type = command_library.lookup(command_library.getValidCommands(), command_strings[0], CommandType::Unknown);
+    if (command.type == CommandType::Unknown)
+        command.direction = command_library.lookup(command_library.getValidDirections(), command_strings[0], Direction::Unknown);
+
+    if (command.hasValidDirection())
+        return command;
+
     switch (command.type) {
         case CommandType::Help: {
             command.item = command_library.lookup(command_library.getValidItems(), command_strings[1], ItemType::NotSet);

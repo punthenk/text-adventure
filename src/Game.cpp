@@ -225,6 +225,9 @@ void Game::createRooms(std::optional<unsigned int> current_room_id) {
 bool Game::processCommand(Command command) {
     bool wantToQuit = false;
 
+    if (command.type == CommandType::Unknown && command.hasValidDirection())
+        goRoom(command);
+
     switch (command.type) {
         case CommandType::Help: {
             printHelp(command);
