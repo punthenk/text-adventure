@@ -6,6 +6,7 @@
 #include "core/Console.h"
 #include <iostream>
 #include <unistd.h>
+#include "TerminalRawMode.h"
 
 void Console::print(const string &text) {
     std::cout << text;
@@ -35,8 +36,8 @@ void Console::printSuccessLine(const string &text) {
     std::cout << Color::Green << text << Color::Reset << '\n';
 }
 
-// FIXME: Type before typing is done makes corrupt input
 void Console::typeLine(const string &text, int delay_ms) {
+    TerminalRawMode raw;
     const int microseconds = 1000;
     std::vector<char> chars(text.begin(), text.end());
     for (const char c : chars) {
