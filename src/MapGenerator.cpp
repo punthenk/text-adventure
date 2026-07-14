@@ -13,6 +13,12 @@
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
     max_amount_of_rooms = 30;
+
+    room_descriptions.push_back("You step into a dimly lit concrete chamber.\nThe air is damp, and its very warm. And you're completely alone...");
+    room_descriptions.push_back("Rows of abandoned workstations fill the room.\nMost of the monitors are dark, but one still flickers with unreadable text.");
+    room_descriptions.push_back("The smell of burnt electronics hangs in the air.\nSparks occasionally jump from a damaged control panel.");
+    room_descriptions.push_back("A long corridor stretches into the darkness.\nYour footsteps echo loudly, as if something is listening.");
+    room_descriptions.push_back("You enter what appears to be a laboratory.\nBroken glass covers the floor, and overturned equipment lies scattered everywhere.");
 }
 
 Room* MapGenerator::generate() {
@@ -88,7 +94,16 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             }
 
             // Found a valid direction, now make a new room
-            Room* neighbor_room = new Room("in a test room", room_is_locked);
+            string description;
+            if (chance(rng) < 0.8 && room_descriptions.size() > 0) {
+                const int random_index = std::uniform_int_distribution<int>(0, room_descriptions.size() - 1)(rng);
+                description = room_descriptions[random_index];
+                room_descriptions.erase(room_descriptions.begin() + random_index);
+            } else {
+                description = "";
+            }
+
+            Room* neighbor_room = new Room(description, room_is_locked);
 
             bool this_freely_reachable = parent_freely_reachable && !room_is_locked;
             freely_reachable[neighbor_room] = this_freely_reachable;

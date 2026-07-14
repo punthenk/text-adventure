@@ -12,8 +12,6 @@
 #include "MapView.h"
 #include "core/Console.h"
 #include "SaveGame.h"
-#include "items/HealItems.h"
-#include "items/Key.h"
 
 Game::Game() {
     auto save_data = SaveGame::load();
@@ -22,9 +20,6 @@ Game::Game() {
     }
 
     createRooms(save_data->current_room_id);
-
-    // Item* knife = new Knife(1, ItemType::Knife, "A knife");
-    // player.setItemInInventory(ItemType::Knife, knife);
 }
 
 void Game::play() {
@@ -116,7 +111,9 @@ void Game::goRoom(Command command) {
     if (!next_room->getIsLocked()) {
         player.setCurrentRoom(next_room);
         player.damage(10);
-        Console::typeLine(player.current_room->getDescription());
+        if (!player.current_room->getDescription().empty())
+            Console::typeLine(player.current_room->getDescription());
+
         Console::printInfo("Exits: ");
         Console::printSuccessLine(player.current_room->getExitString());
         Console::printInfo("Items: ");
@@ -225,8 +222,10 @@ void Game::createRooms(std::optional<unsigned int> current_room_id) {
 bool Game::processCommand(Command command) {
     bool wantToQuit = false;
 
-    if (command.type == CommandType::Unknown && command.hasValidDirection())
+    if (command.type == CommandType::Unknown && command.hasValidDirection()) {
         goRoom(command);
+        return wantToQuit;
+    }
 
     switch (command.type) {
         case CommandType::Help: {

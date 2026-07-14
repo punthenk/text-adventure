@@ -8,6 +8,9 @@
 #include <random>
 #include <map>
 #include "Room.h"
+#include <string>
+
+using std::string;
 
 class MapGenerator {
 public:
@@ -25,6 +28,7 @@ private:
     std::vector<Room*> active_rooms;
     std::map<Room*, std::pair<int, int>> active_positions;
     std::map<int, Room*> rooms;
+    std::vector<string> room_descriptions;
 
     void generateRooms(int x, int y, Room* current_room);
     Direction opposite(Direction dir);
