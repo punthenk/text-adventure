@@ -56,6 +56,122 @@ void Console::typeLine(const string &text, int delay_ms) {
     std::cout << '\n';
 }
 
+void Console::type(const string &text, int delay_ms) {
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+}
+
+void Console::typeWarningLine(const string &text, int delay_ms) {
+    std::cout << Color::Yellow;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << '\n';
+    std::cout << Color::Reset;
+}
+
+void Console::typeWarning(const string &text, int delay_ms) {
+    std::cout << Color::Yellow;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << Color::Reset;
+}
+
+void Console::typeDangerLine(const string &text, int delay_ms) {
+    std::cout << Color::Red;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << '\n';
+    std::cout << Color::Reset;
+}
+
+void Console::typeDanger(const string &text, int delay_ms) {
+    std::cout << Color::Red;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << Color::Reset;}
+
+void Console::typeInfoLine(const string &text, int delay_ms) {
+    std::cout << Color::Blue;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << '\n';
+    std::cout << Color::Reset;
+}
+
+void Console::typeInfo(const string &text, int delay_ms) {
+    std::cout << Color::Blue;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << Color::Reset;}
+
+void Console::typeSuccessLine(const string &text, int delay_ms) {
+    std::cout << Color::Green;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << '\n';
+    std::cout << Color::Reset;
+}
+
+void Console::typeSuccess(const string &text, int delay_ms) {
+    std::cout << Color::Green;
+    TerminalRawMode raw;
+    const int microseconds = 1000;
+    std::vector<char> chars(text.begin(), text.end());
+    for (const char c : chars) {
+        std::cout << c;
+        std::cout.flush();
+        usleep(delay_ms * microseconds);
+    }
+    std::cout << Color::Reset;}
+
 void Console::flush() {
     std::cout.flush();
 }

@@ -19,7 +19,7 @@ public:
     void damage(int amount);
     void heal(int amount);
     void setItemInInventory(ItemType item_type, Item* item); // Temporary
-    void printHealth();
+    void typeHealth();
 
     bool takeFromChest(ItemType item_type);
     bool dropToChest(ItemType item_type);

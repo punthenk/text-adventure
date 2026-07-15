@@ -42,8 +42,8 @@ void Enemy::printHealth() const {
     else if (getHealth() < 50)
         Console::setColor(Color::Yellow);
 
-    Console::print(std::to_string(getHealth()));
+    Console::type(std::to_string(getHealth()));
 
     Console::setColor(Color::Reset);
-    Console::printSuccessLine("/100");
+    Console::typeSuccessLine("/100");
 }

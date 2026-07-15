@@ -4,9 +4,10 @@
  */
 
 #include "LunaticEncounter.h"
+#include <thread>
+#include <chrono>
 #include "core/Console.h"
 #include <vector>
-
 #include "Player.h"
 
 LunaticEncounter::LunaticEncounter() : enemy("Escaped lunatic prisoner", 100, 15) { }
@@ -26,16 +27,20 @@ void LunaticEncounter::runRound(Player &player) {
     if (input[0] == "attack") {
         int damage = 20;
         enemy.takeDamage(damage);
-        Console::printInfo("YES! You hit him, his health is now: ");
+        Console::typeSuccess("YES! You hit him, his health is now: ");
         enemy.printHealth();
     } else {
-        Console::printWarningLine("NO! THAT DOES NOT DO ANYTHING!");
+        Console::typeWarningLine("NO! THAT DOES NOT DO ANYTHING!");
     }
+
+    Console::typeLine("OH NO! He is preparing for a big...") ;
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    Console::typeDangerLine("BAAAAAMMMM!!!");
 
     if (enemy.isAlive()) {
         player.damage(enemy.getAttackDamage());
-        Console::printDanger("HE HIT YOU! Your health is now: ");
-        player.printHealth();
+        Console::typeDanger("HE HIT YOU! Your health is now: ");
+        player.typeHealth();
     }
 }
 

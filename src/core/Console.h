@@ -32,5 +32,15 @@ public:
     static void setColor(const char* color);
 
     static void typeLine(const string& text, int delay_ms = 35);
+    static void type(const string& text, int delay_ms = 35);
+    static void typeWarningLine(const string& text, int delay_ms = 35);
+    static void typeWarning(const string& text, int delay_ms = 35);
+    static void typeDangerLine(const string& text, int delay_ms = 35);
+    static void typeDanger(const string& text, int delay_ms = 35);
+    static void typeInfoLine(const string& text, int delay_ms = 35);
+    static void typeInfo(const string& text, int delay_ms = 35);
+    static void typeSuccessLine(const string &text, int delay_ms = 35);
+    static void typeSuccess(const string &text, int delay_ms = 35);
+
     static void flush();
 };
