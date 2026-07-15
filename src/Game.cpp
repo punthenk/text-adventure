@@ -118,7 +118,6 @@ void Game::goRoom(Command command) {
         Console::printSuccessLine(player.current_room->getExitString());
         Console::printInfo("Items: ");
         Console::printSuccessLine(player.current_room->chest.listItems());
-        Console::printWarningLine(std::to_string(player.current_room->getRoomId()));
     } else {
         Console::printWarningLine("The room you want to enter is locked");
     }
