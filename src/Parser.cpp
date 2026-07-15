@@ -15,7 +15,7 @@ using std::string;
 
 Parser::Parser() { }
 
-Command Parser::getCommand() {
+std::vector<string> Parser::getInput() {
     Console::print("> ");
 
     const string delimiter = " ";
@@ -28,7 +28,7 @@ Command Parser::getCommand() {
     Command command;
 
     if (input.empty()) {
-        return Command({CommandType::Unknown});
+        return command_strings;
     }
 
     size_t pos = 0;
@@ -39,6 +39,13 @@ Command Parser::getCommand() {
     }
 
     command_strings.push_back(input);
+    return command_strings;
+}
+
+Command Parser::getCommand() {
+    Command command;
+    std::vector<string> command_strings = getInput();
+
 
     command.type = command_library.lookup(command_library.getValidCommands(), command_strings[0], CommandType::Unknown);
     if (command.type == CommandType::Unknown)
@@ -71,6 +78,7 @@ Command Parser::getCommand() {
 
     return command;
 }
+
 
 void Parser::printValidCommands() {
     Console::printInfo("You commands are: ");

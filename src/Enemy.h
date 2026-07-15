@@ -14,13 +14,15 @@ class Enemy {
 public:
     Enemy(string name, int health, int attack_damage);
     void takeDamage(int amount);
-    bool isDead() const;
+    bool isAlive() const;
     int getHealth() const;
+    int getMaxHealth() const;
     int getAttackDamage() const;
     const string& getName() const;
 
 private:
     string name;
     int health;
+    int max_health;
     int attack_damage;
 };

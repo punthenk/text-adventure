@@ -24,6 +24,10 @@ void Console::printDangerLine(const string &text) {
     std::cout << Color::Red << text << Color::Reset << '\n';
 }
 
+void Console::printDanger(const string &text) {
+    std::cout << Color::Red << text << Color::Reset;
+}
+
 void Console::printInfo(const string &text) {
     std::cout << Color::Blue << text << Color::Reset;
 }

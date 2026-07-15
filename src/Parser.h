@@ -12,6 +12,7 @@ class Parser {
 
 public:
     Parser();
+    std::vector<string> getInput();
     Command getCommand();
     void printValidCommands();
 
