@@ -40,6 +40,10 @@ void Console::printSuccessLine(const string &text) {
     std::cout << Color::Green << text << Color::Reset << '\n';
 }
 
+void Console::setColor(const char* color) {
+    std::cout << color;
+}
+
 void Console::typeLine(const string &text, int delay_ms) {
     TerminalRawMode raw;
     const int microseconds = 1000;

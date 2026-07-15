@@ -26,8 +26,8 @@ void LunaticEncounter::runRound(Player &player) {
     if (input[0] == "attack") {
         int damage = 20;
         enemy.takeDamage(damage);
-        Console::printInfo("YES! You hit him, his health is now");
-        Console::printDangerLine(std::to_string(enemy.getHealth()) + "/" + std::to_string(enemy.getMaxHealth()));
+        Console::printInfo("YES! You hit him, his health is now: ");
+        enemy.printHealth();
     } else {
         Console::printWarningLine("NO! THAT DOES NOT DO ANYTHING!");
     }
@@ -35,7 +35,7 @@ void LunaticEncounter::runRound(Player &player) {
     if (enemy.isAlive()) {
         player.damage(enemy.getAttackDamage());
         Console::printDanger("HE HIT YOU! Your health is now: ");
-        Console::printSuccessLine(std::to_string(player.getHealth()) + "/100");
+        player.printHealth();
     }
 }
 

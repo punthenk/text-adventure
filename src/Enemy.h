@@ -19,6 +19,7 @@ public:
     int getMaxHealth() const;
     int getAttackDamage() const;
     const string& getName() const;
+    void printHealth() const;
 
 private:
     string name;

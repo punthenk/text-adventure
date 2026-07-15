@@ -53,6 +53,20 @@ void Player::setItemInInventory(ItemType item_type, Item* item) {
     backpack.put(item_type, std::move(item_unique_ptr));
 }
 
+void Player::printHealth() {
+    if (getHealth() > 50)
+        Console::setColor(Color::Green);
+    else if (getHealth() < 30)
+        Console::setColor(Color::Red);
+    else if (getHealth() < 50)
+        Console::setColor(Color::Yellow);
+
+    Console::print(std::to_string(getHealth()));
+
+    Console::setColor(Color::Reset);
+    Console::printSuccessLine("/100");
+}
+
 bool Player::takeFromChest(ItemType item_type) {
     Item* item = current_room->chest.get(item_type);
     if (item == nullptr) {

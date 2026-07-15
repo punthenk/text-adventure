@@ -29,7 +29,8 @@ public:
     static void printInfoLine(const string& text);
     static void printSuccessLine(const string &text);
 
+    static void setColor(const char* color);
+
     static void typeLine(const string& text, int delay_ms = 35);
-    static void type(const string& text, int delay_ms = 35);
     static void flush();
 };
