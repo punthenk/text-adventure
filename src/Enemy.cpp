@@ -14,6 +14,10 @@ void Enemy::takeDamage(int amount) {
     health -= amount;
 }
 
+void Enemy::increaseAttackDamage(int amount) {
+    attack_damage += amount;
+}
+
 bool Enemy::isAlive() const {
     return health > 0;
 }

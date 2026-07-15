@@ -29,6 +29,11 @@ void LunaticEncounter::runRound(Player &player) {
         enemy.takeDamage(damage);
         Console::typeSuccess("YES! You hit him, his health is now: ");
         enemy.printHealth();
+    } else if (input[0] == "dodge") {
+        Console::typeSuccessLine("Pffehhh, that was close. He nearly hit you...");
+        Console::typeWarningLine("But now he's angry! He will hit harder than before!");
+        enemy.increaseAttackDamage(5);
+        return;
     } else {
         Console::typeWarningLine("NO! THAT DOES NOT DO ANYTHING!");
     }
