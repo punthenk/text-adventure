@@ -29,6 +29,8 @@ add_executable(game
     src/items/HealItems.cpp
     src/core/Console.cpp
     src/SaveGame.cpp
+    src/Enemy.cpp
+    src/encounters/LunaticEncounter.cpp
 )
 
 target_include_directories(game PRIVATE src)

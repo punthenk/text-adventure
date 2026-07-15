@@ -8,6 +8,7 @@
 #include <map>
 #include <string>
 #include "CommandType.h"
+#include "Encounter.h"
 #include "Inventory.h"
 
 using std::string;
@@ -26,6 +27,7 @@ public:
     bool getIsVisited() const;
     bool unlock();
     Inventory chest{9999};
+    std::unique_ptr<Encounter> encounter;
 
     // TEMPORARY:
     bool hasKeyInChest();

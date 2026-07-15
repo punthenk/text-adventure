@@ -118,6 +118,17 @@ void Game::goRoom(Command command) {
         Console::printSuccessLine(player.current_room->getExitString());
         Console::printInfo("Items: ");
         Console::printSuccessLine(player.current_room->chest.listItems());
+
+        if (player.current_room->encounter && player.current_room->encounter->isActive()) {
+            player.current_room->encounter->onStart(player);
+
+            while (player.current_room->encounter->isActive() && player.isAlive()) {
+                player.current_room->encounter->runRound(player);
+            }
+
+            if (player.isAlive())
+                Console::printSuccessLine("YES! You defeated him");
+        }
     } else {
         Console::printWarningLine("The room you want to enter is locked");
     }

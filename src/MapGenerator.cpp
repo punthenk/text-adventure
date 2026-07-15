@@ -9,6 +9,7 @@
 #include "items/Key.h"
 #include "items/Knife.h"
 #include "MapView.h"
+#include "encounters/LunaticEncounter.h"
 #include "items/HealItems.h"
 
 MapGenerator::MapGenerator(unsigned int seed, int grid_width, int grid_height) : rng(seed), grid_width(grid_width), grid_height(grid_height) {
@@ -107,6 +108,8 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
 
             bool this_freely_reachable = parent_freely_reachable && !room_is_locked;
             freely_reachable[neighbor_room] = this_freely_reachable;
+
+            neighbor_room->encounter = std::make_unique<LunaticEncounter>();
 
             // Add items
             if (chance(rng) < 0.25) {
