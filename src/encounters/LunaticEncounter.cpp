@@ -22,14 +22,24 @@ bool LunaticEncounter::isActive() const {
 }
 
 void LunaticEncounter::runRound(Player &player) {
-    std::vector<string> input = parser.getInput();
+    auto input = parser.getInputWithTimeout(5);
 
-    if (input[0] == "attack") {
+    if (!input.has_value()) {
+        Console::typeDangerLine("You hesitated too long!");
+        std::this_thread::sleep_for(std::chrono::milliseconds(500));
+        Console::typeDangerLine("BAAAAAMMMM!!!");
+        player.damage(enemy.getAttackDamage());
+        Console::typeDanger("Your health is now: ");
+        player.typeHealth();
+        return;
+    }
+
+    if (!input->empty() && (*input)[0] == "attack") {
         int damage = 20;
         enemy.takeDamage(damage);
         Console::typeSuccess("YES! You hit him, his health is now: ");
         enemy.printHealth();
-    } else if (input[0] == "dodge") {
+    } else if ((*input)[0] == "dodge") {
         Console::typeSuccessLine("Pffehhh, that was close. He nearly hit you...");
         Console::typeWarningLine("But now he's angry! He will hit harder than before!");
         enemy.increaseAttackDamage(5);
