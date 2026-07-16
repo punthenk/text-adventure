@@ -23,7 +23,7 @@ bool Enemy::isAlive() const {
 }
 
 int Enemy::getHealth() const {
-    return health;
+    return health < 0 ? 0 : health;
 }
 
 int Enemy::getMaxHealth() const {

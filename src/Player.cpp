@@ -19,7 +19,7 @@ int Player::getBackpackSpace() {
 }
 
 int Player::getHealth() {
-    return health;
+    return health < 0 ? 0 : health;
 }
 
 void Player::setHealth(int amount) {
