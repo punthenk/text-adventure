@@ -7,6 +7,7 @@
 #include <thread>
 #include <chrono>
 #include "core/Console.h"
+#include "core/Random.h"
 #include <vector>
 #include "Player.h"
 
@@ -21,41 +22,77 @@ bool LunaticEncounter::isActive() const {
     return enemy.isAlive();
 }
 
-void LunaticEncounter::runRound(Player &player) {
-    auto input = parser.getInputWithTimeout(5);
-
-    if (!input.has_value()) {
-        Console::typeDangerLine("You hesitated too long!");
-        std::this_thread::sleep_for(std::chrono::milliseconds(500));
-        Console::typeDangerLine("BAAAAAMMMM!!!");
-        player.damage(enemy.getAttackDamage());
-        Console::typeDanger("Your health is now: ");
-        player.typeHealth();
-        return;
+const std::vector<RoundEvent> LunaticEncounter::round_events = {
+    {
+        "NO! He is ready to hit you with ALL his FORCE! DODGE!",
+        RequiredAction::Dodge,
+        "Pffehhh, that was close. He nearly hit you...",
+        "KABLAMMM!! He hits you with full force!",
+        20,
+    },
+    {
+        "OH NO! He's about to attack you can't react fast enough! BLOCK HIM!!!",
+        RequiredAction::Block,
+        "Well done! You blocked him really well!",
+        "BAAAMMMMM! He hits you right in the face...",
+        15,
+        5,
+    },
+    {
+        "He's turning around. QUICK! Attack him!",
+        RequiredAction::Attack,
+        "YES! You hit him!",
+        "Shit, you missed him! He will not be so happy now...",
+        10,
+    },
+    {
+        "You do what you think is best",
+        RequiredAction::Any,
+        "GOOD ONE!",
+        "That was probably not the best option...",
+        10,
     }
+};
 
-    if (!input->empty() && (*input)[0] == "attack") {
-        int damage = 20;
-        enemy.takeDamage(damage);
-        Console::typeSuccess("YES! You hit him, his health is now: ");
-        enemy.printHealth();
-    } else if ((*input)[0] == "dodge") {
-        Console::typeSuccessLine("Pffehhh, that was close. He nearly hit you...");
-        Console::typeWarningLine("But now he's angry! He will hit harder than before!");
-        enemy.increaseAttackDamage(5);
-        return;
-    } else {
-        Console::typeWarningLine("NO! THAT DOES NOT DO ANYTHING!");
+bool LunaticEncounter::matchesRequiredAction(const string &input, RequiredAction required_action) const {
+    switch (required_action) {
+        case RequiredAction::Attack: return input == "attack";
+        case RequiredAction::Dodge: return input == "dodge";
+        case RequiredAction::Block: return input == "block";
+        case RequiredAction::Any: return true;
     }
-
-    Console::typeLine("OH NO! He is preparing for a big...") ;
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
-    Console::typeDangerLine("BAAAAAMMMM!!!");
-
-    if (enemy.isAlive()) {
-        player.damage(enemy.getAttackDamage());
-        Console::typeDanger("HE HIT YOU! Your health is now: ");
-        player.typeHealth();
-    }
+    return false;
 }
 
+void LunaticEncounter::runRound(Player &player) {
+    const RoundEvent& event = Random::pick(round_events);
+
+    Console::typeLine(event.telegraph);
+    auto input = parser.getInputWithTimeout(countdown_seconds);
+
+    string action = (input.has_value() && !input->empty()) ? (*input)[0] : "";
+    bool succeeded = matchesRequiredAction(action, event.required_action);
+
+    if (event.required_action == RequiredAction::Attack && succeeded) {
+        enemy.takeDamage(player_attack_damage);
+    } else if (event.required_action == RequiredAction::Block && succeeded) {
+        player_attack_damage += 5;
+    } else if (event.required_action == RequiredAction::Any && succeeded) {
+        enemy.takeDamage(player_attack_damage);
+    }
+
+    if (succeeded) {
+        Console::typeSuccessLine(event.success_message);
+        if (event.damage_if_success > 0) {
+            player.damage(event.damage_if_success);
+        }
+    } else {
+        Console::typeDangerLine(event.failure_message);
+        player.damage(event.damage_if_fail);
+    }
+
+    Console::typeWarning("Your health is now: ");
+    player.typeHealth();
+    Console::typeWarning("The enemy's health is now: ");
+    enemy.typeHealth();
+}
