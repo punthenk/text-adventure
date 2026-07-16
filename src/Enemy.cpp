@@ -38,7 +38,7 @@ const string& Enemy::getName() const {
     return name;
 }
 
-void Enemy::printHealth() const {
+void Enemy::typeHealth() const {
     if (getHealth() > 50)
         Console::setColor(Color::Green);
     else if (getHealth() < 30)
