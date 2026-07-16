@@ -122,6 +122,8 @@ Command Parser::getCommand() {
     Command command;
     std::vector<string> command_strings = getInput();
 
+    if (command_strings.empty())
+        return Command({CommandType::Unknown});
 
     command.type = command_library.lookup(command_library.getValidCommands(), command_strings[0], CommandType::Unknown);
     if (command.type == CommandType::Unknown)
