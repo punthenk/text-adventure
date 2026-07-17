@@ -9,16 +9,9 @@
 #include "Enemy.h"
 #include "Parser.h"
 
-enum class RequiredAction : std::uint8_t {
-    Attack,
-    Dodge,
-    Block,
-    Any,
-};
-
 struct RoundEvent {
     string telegraph;
-    RequiredAction required_action;
+    std::optional<CombatCommand> required_command;
     string success_message;
     string failure_message;
     int damage_if_fail;
@@ -39,5 +32,4 @@ private:
     static const std::vector<RoundEvent> round_events;
     int countdown_seconds = 5;
     int player_attack_damage = 10;
-    bool matchesRequiredAction(const string& input, RequiredAction required_action) const;
 };

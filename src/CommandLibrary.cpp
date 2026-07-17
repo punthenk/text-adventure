@@ -37,6 +37,11 @@ CommandLibrary::CommandLibrary() {
     valid_items["key"] = ItemType::Key;
     valid_items["vodka"] = ItemType::Vodka;
     valid_items["medkit"] = ItemType::Medkit;
+
+    // Combat Commands
+    valid_combat_commands["attack"] = CombatCommand::Attack;
+    valid_combat_commands["block"] = CombatCommand::Block;
+    valid_combat_commands["dodge"] = CombatCommand::Dodge;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {
@@ -100,3 +105,8 @@ std::map<string, Direction> CommandLibrary::getValidDirections() const {
 std::map<string, ItemType> CommandLibrary::getValidItems() {
     return valid_items;
 }
+
+std::map<string, CombatCommand> CommandLibrary::getValidCombatCommands() {
+    return valid_combat_commands;
+}
+

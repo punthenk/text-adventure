@@ -25,5 +25,13 @@ bool Command::hasItem() {
 }
 
 bool Command::hasValidItem() {
-    return item != ItemType::Unknown && item != ItemType::Unknown;
+    return item != ItemType::Unknown && item != ItemType::NotSet;
+}
+
+bool Command::hasCombatCommand() {
+    return combat_command != CombatCommand::NotSet;
+}
+
+bool Command::hasValidCombatCommand() {
+    return combat_command != CombatCommand::Unknown && combat_command != CombatCommand::NotSet;
 }

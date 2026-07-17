@@ -4,8 +4,7 @@
  */
 
 #include "LunaticEncounter.h"
-#include <thread>
-#include <chrono>
+
 #include "core/Console.h"
 #include "core/Random.h"
 #include <vector>
@@ -25,14 +24,14 @@ bool LunaticEncounter::isActive() const {
 const std::vector<RoundEvent> LunaticEncounter::round_events = {
     {
         "NO! He is ready to hit you with ALL his FORCE! DODGE!",
-        RequiredAction::Dodge,
+        CombatCommand::Dodge,
         "Pffehhh, that was close. He nearly hit you...",
         "KABLAMMM!! He hits you with full force!",
         20,
     },
     {
         "OH NO! He's about to attack you can't react fast enough! BLOCK HIM!!!",
-        RequiredAction::Block,
+        CombatCommand::Block,
         "Well done! You blocked him really well!",
         "BAAAMMMMM! He hits you right in the face...",
         15,
@@ -40,55 +39,68 @@ const std::vector<RoundEvent> LunaticEncounter::round_events = {
     },
     {
         "He's turning around. QUICK! Attack him!",
-        RequiredAction::Attack,
+        CombatCommand::Attack,
         "YES! You hit him!",
         "Shit, you missed him! He will not be so happy now...",
         10,
     },
     {
         "You do what you think is best",
-        RequiredAction::Any,
+        std::nullopt,
         "GOOD ONE!",
         "That was probably not the best option...",
         10,
     }
 };
 
-bool LunaticEncounter::matchesRequiredAction(const string &input, RequiredAction required_action) const {
-    switch (required_action) {
-        case RequiredAction::Attack: return input == "attack";
-        case RequiredAction::Dodge: return input == "dodge";
-        case RequiredAction::Block: return input == "block";
-        case RequiredAction::Any: return true;
-    }
-    return false;
-}
-
 void LunaticEncounter::runRound(Player &player) {
     const RoundEvent& event = Random::pick(round_events);
 
     Console::typeLine(event.telegraph);
-    auto input = parser.getInputWithTimeout(countdown_seconds);
+    Command command = parser.getCombatCommand(countdown_seconds);
+    bool succeeded = true;
+    bool any_action = false;
 
-    string action = (input.has_value() && !input->empty()) ? (*input)[0] : "";
-    bool succeeded = matchesRequiredAction(action, event.required_action);
+    if (!event.required_command.has_value())
+        any_action = true;
 
-    if (event.required_action == RequiredAction::Attack && succeeded) {
-        enemy.takeDamage(player_attack_damage);
-    } else if (event.required_action == RequiredAction::Block && succeeded) {
-        player_attack_damage += 5;
-    } else if (event.required_action == RequiredAction::Any && succeeded) {
-        enemy.takeDamage(player_attack_damage);
+    if (!command.hasCombatCommand()) {
+        Console::printWarningLine("YOU HAVE TO TYPE SOMETHING!");
+        succeeded = false;
+    } else if (!command.hasValidCombatCommand()) {
+        Console::printWarningLine("THAT IS NOT A VALID COMMAND!");
+        succeeded = false;
+    } else if (!any_action && command.combat_command != event.required_command.value()) {
+        Console::typeDangerLine("NO! THAT Is not the right one...");
+        succeeded = false;
     }
 
-    if (succeeded) {
-        Console::typeSuccessLine(event.success_message);
-        if (event.damage_if_success > 0) {
-            player.damage(event.damage_if_success);
-        }
-    } else {
-        Console::typeDangerLine(event.failure_message);
+    if (!succeeded) {
+        Console::typeWarningLine(event.failure_message);
         player.damage(event.damage_if_fail);
+        return;
+    }
+
+    Console::typeSuccessLine(event.success_message);
+
+    switch (command.combat_command) {
+        case CombatCommand::Attack: {
+            enemy.damage(player_attack_damage);
+            break;
+        }
+        case CombatCommand::Block: {
+            player_attack_damage += 5;
+            player.damage(event.damage_if_success);
+            break;
+        }
+        case CombatCommand::Dodge: {
+            enemy.increaseAttackDamage(5);
+            break;
+        }
+        default: {
+            Console::typeWarningLine("WHAT?");
+            break;
+        }
     }
 
     Console::typeWarning("Your health is now: ");

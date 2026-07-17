@@ -38,3 +38,11 @@ enum class ItemType : std::uint8_t {
     Unknown,
     NotSet,
 };
+
+enum class CombatCommand : std::int8_t {
+    Attack,
+    Dodge,
+    Block,
+    Unknown,
+    NotSet,
+};

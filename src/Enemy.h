@@ -13,7 +13,7 @@ class Enemy {
 
 public:
     Enemy(string name, int health, int attack_damage);
-    void takeDamage(int amount);
+    void damage(int amount);
     void increaseAttackDamage(int amount);
     bool isAlive() const;
     int getHealth() const;

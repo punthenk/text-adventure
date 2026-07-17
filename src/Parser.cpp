@@ -157,6 +157,19 @@ Command Parser::getCommand() {
     return command;
 }
 
+Command Parser::getCombatCommand(int seconds) {
+    Command command;
+    std::optional<std::vector<string>> command_strings = getInputWithTimeout(seconds);
+
+    if (!command_strings.has_value()) {
+        command.combat_command = CombatCommand::NotSet;
+        return command;
+    }
+
+    command.combat_command = command_library.lookup(command_library.getValidCombatCommands(), (*command_strings)[0], CombatCommand::Unknown);
+    return command;
+}
+
 
 void Parser::printValidCommands() {
     Console::printInfo("You commands are: ");

@@ -36,10 +36,12 @@ public:
     std::map<string, CommandType> getValidCommands() const;
     std::map<string, Direction> getValidDirections() const;
     std::map<string, ItemType> getValidItems();
+    std::map<string, CombatCommand> getValidCombatCommands();
 
 private:
     std::map<string, CommandType> valid_commands;
     std::map<string, Direction> valid_directions;
+    std::map<string, CombatCommand> valid_combat_commands;
     static std::map<string, ItemType> valid_items;
 };
 

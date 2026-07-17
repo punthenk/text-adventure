@@ -15,10 +15,13 @@ public:
     CommandType type = CommandType::Unknown;
     Direction direction = Direction::NotSet;
     ItemType item = ItemType::NotSet;
+    CombatCommand combat_command = CombatCommand::NotSet;
 
     bool isUnknown(CommandType command) const;
     bool hasDirection();
     bool hasValidDirection();
     bool hasItem();
     bool hasValidItem();
+    bool hasCombatCommand();
+    bool hasValidCombatCommand();
 };

@@ -10,7 +10,7 @@ Enemy::Enemy(string name, int health, int attack_damage) : name(name), health(he
     max_health = health;
 }
 
-void Enemy::takeDamage(int amount) {
+void Enemy::damage(int amount) {
     health -= amount;
 }
 
