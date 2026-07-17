@@ -115,7 +115,7 @@ void Game::goRoom(Command command) {
             Console::typeLine(player.current_room->getDescription());
 
         Console::printInfo("Exits: ");
-        Console::printSuccessLine(player.current_room->getExitString());
+        Console::printWarningLine(player.current_room->getExitString());
         Console::printInfo("Items: ");
         Console::printSuccessLine(player.current_room->chest.listItems());
 
