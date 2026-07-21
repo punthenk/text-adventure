@@ -77,7 +77,7 @@ void Game::printHelp(Command command) {
 
 void Game::status() {
     Console::printInfo("Your health is ");
-    Console::printSuccessLine(std::to_string(player.getHealth()) + "/100");
+    player.typeHealth();
     Console::printLine("----------------------");
     Console::printInfo("Your inventory: ");
     Console::printSuccessLine(player.backpack.listItems());
