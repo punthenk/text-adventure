@@ -16,6 +16,8 @@ struct RoundEvent {
     string failure_message;
     int damage_if_fail;
     int damage_if_success = 0;
+    bool attack_after_event = false;
+    int countdown_seconds = 5;
 };
 
 class LunaticEncounter : public Encounter {
@@ -32,4 +34,7 @@ private:
     static const std::vector<RoundEvent> round_events;
     int countdown_seconds = 5;
     int player_attack_damage = 10;
+    bool attack_after_event = false;
+
+    bool checkIfValidCommand();
 };
