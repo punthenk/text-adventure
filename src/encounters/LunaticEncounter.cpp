@@ -64,7 +64,7 @@ const std::vector<RoundEvent> LunaticEncounter::round_events = {
         CombatCommand::Attack,
         "Well done! That was fast",
         "Too bad, you weren't quick enough. Better next time. I hope...",
-        15,
+        5,
         0,
         false,
         2,
