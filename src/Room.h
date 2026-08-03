@@ -31,6 +31,7 @@ public:
 
     // TEMPORARY:
     bool hasKeyInChest();
+    bool hasEncounter();
 
 private:
     string description;

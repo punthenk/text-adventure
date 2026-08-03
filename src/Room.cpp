@@ -76,3 +76,7 @@ bool Room::unlock() {
 bool Room::hasKeyInChest() {
     return chest.checkIfItemIsAvailable(ItemType::Key);
 }
+
+bool Room::hasEncounter() {
+    return encounter != nullptr;
+}
