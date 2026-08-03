@@ -82,22 +82,15 @@ void LunaticEncounter::runRound(Player &player) {
     if (!event.required_command.has_value())
         any_action = true;
 
-    if (event.attack_after_event) {
-        if (!command.hasCombatCommand()) {
-            Console::printWarningLine("YOU HAVE TO TYPE SOMETHING!");
-            succeeded = false;
-        } else if (!command.hasValidCombatCommand()) {
-            Console::printWarningLine("THAT IS NOT A VALID COMMAND!");
-            succeeded = false;
-        } else if (!any_action && command.combat_command != event.required_command.value()) {
-            Console::typeDangerLine("NO! THAT Is not the right one...");
-            succeeded = false;
-        }
-    } else {
-        if (command.combat_command != CombatCommand::Attack) {
-            Console::typeDangerLine("You did not type it right!");
-            succeeded = false;
-        }
+    if (!command.hasCombatCommand()) {
+        Console::printWarningLine("YOU HAVE TO TYPE SOMETHING!");
+        succeeded = false;
+    } else if (!command.hasValidCombatCommand()) {
+        Console::printWarningLine("THAT IS NOT A VALID COMMAND!");
+        succeeded = false;
+    } else if (!any_action && command.combat_command != event.required_command.value()) {
+        Console::typeDangerLine("NO! THAT Is not the right one...");
+        succeeded = false;
     }
 
     if (!succeeded) {
@@ -143,4 +136,22 @@ void LunaticEncounter::runRound(Player &player) {
     player.typeHealth();
     Console::typeWarning("The enemy's health is now: ");
     enemy.typeHealth();
+
+    if (event.attack_after_event) {
+        Console::typeLine(round_events[round_events.size() - 1].telegraph);
+        Command command = parser.getCombatCommand(round_events[round_events.size() - 1].countdown_seconds);
+        if (command.combat_command != round_events[round_events.size() - 1].required_command) {
+            Console::typeDangerLine(round_events[round_events.size() - 1].failure_message);
+            player.damage(round_events[round_events.size() - 1].damage_if_fail);
+        } else {
+            Console::typeSuccessLine(round_events[round_events.size() - 1].success_message);
+            player.damage(round_events[round_events.size() - 1].damage_if_success);
+            enemy.damage(player_attack_damage);
+        }
+
+        Console::typeWarning("Your health is now: ");
+        player.typeHealth();
+        Console::typeWarning("The enemy's health is now: ");
+        enemy.typeHealth();
+    }
 }
