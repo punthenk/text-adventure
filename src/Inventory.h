@@ -17,7 +17,7 @@ using std::string;
 class Inventory {
 public:
     Inventory(int max_weight);
-    void put(ItemType item_type, std::unique_ptr<Item> item);
+    bool put(ItemType item_type, std::unique_ptr<Item> item);
     Item* get(ItemType item_type);
     std::unique_ptr<Item> take(ItemType item_type);
     void add(ItemType item_type);
@@ -25,9 +25,14 @@ public:
     bool checkIfItemIsAvailable(ItemType item_type);
     string listItems();
     std::map<ItemType, int> getItemsForSave() const;
+    int getTotalWeight();
+    int getFreeWeight();
+    int getMaxWeight();
+    bool checkIfItemFits(int weight);
     int getAmountOfItemType(ItemType item_type);
 
 private:
+    // TODO: Implement Inventory weight
     int max_weight;
     std::map<ItemType, std::vector<std::unique_ptr<Item>>> items;
 

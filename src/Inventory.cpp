@@ -12,8 +12,12 @@
 Inventory::Inventory(int max_weight) : max_weight(max_weight) {
 }
 
-void Inventory::put(ItemType item_type, std::unique_ptr<Item> item) {
-    items[item_type].push_back(std::move(item));
+bool Inventory::put(ItemType item_type, std::unique_ptr<Item> item) {
+    if (item->getWeight() <= getFreeWeight()) {
+        items[item_type].push_back(std::move(item));
+        return true;
+    }
+    return false;
 }
 
 bool Inventory::remove(ItemType item_type) {
@@ -100,4 +104,26 @@ int Inventory::getAmountOfItemType(ItemType item_type) {
             amount += item.second.size();
     }
     return amount;
+}
+
+int Inventory::getTotalWeight() {
+    int total = 0;
+    for (auto& item : items) {
+        for (auto& sub_item : item.second) {
+            total += sub_item->getWeight();
+        }
+    }
+    return total;
+}
+
+int Inventory::getMaxWeight() {
+    return max_weight;
+}
+
+int Inventory::getFreeWeight() {
+    return max_weight - getTotalWeight();
+}
+
+bool Inventory::checkIfItemFits(int weight) {
+    return (getFreeWeight() - weight) > 0;
 }

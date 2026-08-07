@@ -8,7 +8,7 @@
 #include "CommandLibrary.h"
 #include "core/Console.h"
 
-Player::Player() : backpack(1000) {
+Player::Player() : backpack(20) {
     health = 100;
     backpack_space = 20;
     current_room = nullptr;
@@ -71,6 +71,11 @@ bool Player::takeFromChest(ItemType item_type) {
     Item* item = current_room->chest.get(item_type);
     if (item == nullptr) {
         Console::printWarningLine("The thing you want to pick up does not exist!");
+        return false;
+    }
+
+    if (!backpack.checkIfItemFits(item->getWeight())) {
+        Console::printDangerLine("This item does not fit in your backpack.");
         return false;
     }
 

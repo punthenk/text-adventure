@@ -10,7 +10,7 @@
 
 Key::Key() {
     name = ItemType::Key;
-    weight = 1;
+    weight = 2;
     description = "A key to open locked doors";
     use_guide = "To use this item type `use key direction` to unlock a locked room in that direction";
     is_one_time_use = true;

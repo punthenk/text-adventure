@@ -88,6 +88,8 @@ void Game::status() {
     Console::printLine("----------------------");
     Console::printInfo("Your inventory: ");
     Console::printSuccessLine(player.backpack.listItems());
+    Console::printInfo("You have used: ");
+    Console::printSuccessLine(std::to_string(player.backpack.getTotalWeight()) + "/" + std::to_string(player.backpack.getMaxWeight()));
 }
 
 void Game::look() {
