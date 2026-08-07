@@ -37,6 +37,7 @@ CommandLibrary::CommandLibrary() {
     valid_items["key"] = ItemType::Key;
     valid_items["vodka"] = ItemType::Vodka;
     valid_items["medkit"] = ItemType::Medkit;
+    valid_items["keycard"] = ItemType::Keycard;
 
     // Combat Commands
     valid_combat_commands["attack"] = CombatCommand::Attack;

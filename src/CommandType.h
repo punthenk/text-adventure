@@ -35,6 +35,7 @@ enum class ItemType : std::uint8_t {
     Key,
     Vodka,
     Medkit,
+    Keycard,
     Unknown,
     NotSet,
 };

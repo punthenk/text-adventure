@@ -27,6 +27,7 @@ add_executable(game
     src/items/Knife.cpp
     src/items/Key.cpp
     src/items/HealItems.cpp
+    src/items/Keycard.cpp
     src/core/Console.cpp
     src/SaveGame.cpp
     src/Enemy.cpp

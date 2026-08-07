@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <random>
 #include "items/Key.h"
+#include "items/Keycard.h"
 #include "items/Knife.h"
 #include "MapView.h"
 #include "encounters/LunaticEncounter.h"
@@ -30,6 +31,7 @@ Room* MapGenerator::generate() {
     start->chest.put(ItemType::Key, std::make_unique<Key>());
     start->chest.put(ItemType::Vodka, std::make_unique<Vodka>());
     start->chest.put(ItemType::Medkit, std::make_unique<Medkit>());
+    start->chest.put(ItemType::Keycard, std::make_unique<Keycard>());
 
     generateRooms(0, grid_height - 1, start);
 
@@ -121,6 +123,9 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             }
             if (chance(rng) < 0.06) {
                 neighbor_room->chest.put(ItemType::Medkit, std::make_unique<Medkit>());
+            }
+            if (chance(rng) < 0.50) {
+                neighbor_room->chest.put(ItemType::Keycard, std::make_unique<Keycard>());
             }
 
             if (this_freely_reachable && chance(rng) < 0.5) {

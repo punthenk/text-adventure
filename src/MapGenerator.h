@@ -24,6 +24,7 @@ private:
 
     std::map<std::pair<int, int>, Room*> grid;
     int created_rooms = 0;
+    int created_keycards = 0;
     int max_amount_of_rooms;
     std::vector<Room*> active_rooms;
     std::map<Room*, std::pair<int, int>> active_positions;
