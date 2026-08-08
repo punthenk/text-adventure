@@ -17,7 +17,9 @@ public:
     std::optional<std::vector<string>> getInputWithTimeout(int seconds);
     Command getCommand();
     Command getCombatCommand(int seconds);
+    Command getEndCommand();
     void printValidCommands();
+    string getEndCommandString();
 
 private:
     std::vector<string> splitInput(const string& input);

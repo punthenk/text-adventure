@@ -32,6 +32,7 @@ add_executable(game
     src/SaveGame.cpp
     src/Enemy.cpp
     src/encounters/LunaticEncounter.cpp
+    src/encounters/EndEncounter.cpp
 )
 
 target_include_directories(game PRIVATE src)

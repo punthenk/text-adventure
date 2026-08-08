@@ -43,6 +43,9 @@ CommandLibrary::CommandLibrary() {
     valid_combat_commands["attack"] = CombatCommand::Attack;
     valid_combat_commands["block"] = CombatCommand::Block;
     valid_combat_commands["dodge"] = CombatCommand::Dodge;
+
+    // End Commands
+    valid_end_commands["insert_keycards"] = EndCommand::InsertKeycards;
 }
 
 bool CommandLibrary::isValidCommandWord(string command) {
@@ -111,3 +114,6 @@ std::map<string, CombatCommand> CommandLibrary::getValidCombatCommands() {
     return valid_combat_commands;
 }
 
+std::map<string, EndCommand> CommandLibrary::getValidEndCommands() {
+    return valid_end_commands;
+}

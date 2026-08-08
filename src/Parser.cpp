@@ -170,6 +170,29 @@ Command Parser::getCombatCommand(int seconds) {
     return command;
 }
 
+Command Parser::getEndCommand() {
+    Command command;
+    std::vector<string> command_strings = getInput();
+
+    if (command_strings.size() <= 0) {
+        command.combat_command = CombatCommand::NotSet;
+        return command;
+    }
+
+    command.end_command = command_library.lookup(command_library.getValidEndCommands(), command_strings[0], EndCommand::Unknown);
+    return command;
+}
+
+string Parser::getEndCommandString() {
+    std::vector<string> command_strings = getInput();
+
+    if (command_strings.size() <= 0) {
+        return "";
+    }
+
+    return command_strings[0];
+}
+
 
 void Parser::printValidCommands() {
     Console::printInfo("You commands are: ");

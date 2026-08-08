@@ -47,3 +47,10 @@ enum class CombatCommand : std::int8_t {
     Unknown,
     NotSet,
 };
+
+
+enum class EndCommand : std::int8_t {
+    InsertKeycards,
+    Unknown,
+    NotSet,
+};
