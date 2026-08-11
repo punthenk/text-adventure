@@ -13,7 +13,6 @@ class Parser {
 
 public:
     Parser();
-    std::vector<string> getInput();
     std::optional<std::vector<string>> getInputWithTimeout(int seconds);
     Command getCommand();
     Command getCombatCommand(int seconds);
@@ -23,6 +22,7 @@ public:
     string getEndCommandStringWithTimeout(int seconds);
 
 private:
+    std::vector<string> getInput();
     std::vector<string> splitInput(const string& input);
     std::optional<string> readLineWithTimeout(int seconds);
     CommandLibrary command_library;
