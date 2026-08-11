@@ -53,7 +53,11 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
 
     int spare_keys = 0;
     bool end_encounter_placed = false;
+    int lunatic_encounters_placed = 0;
     double end_encounter_threshold = 0.7; // until of all the rooms 70% is placed the end encounter can be placed
+
+    int rooms_since_last_encounter = 999;
+    int min_rooms_between_encounters = 4;
 
     std::uniform_real_distribution<double> chance(0.0, 1.0);
 
@@ -114,8 +118,12 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             bool this_freely_reachable = parent_freely_reachable && !room_is_locked;
             freely_reachable[neighbor_room] = this_freely_reachable;
 
-            if (chance(rng) < 0.2)
+            rooms_since_last_encounter++;
+            if (chance(rng) < 0.2 && lunatic_encounters_placed < 2 && rooms_since_last_encounter >= min_rooms_between_encounters) {
                 neighbor_room->encounter = std::make_unique<LunaticEncounter>();
+                lunatic_encounters_placed++;
+                rooms_since_last_encounter = 0;
+            }
 
             double progress = static_cast<double>(created_rooms) / max_amount_of_rooms;
             if (!end_encounter_placed) {
