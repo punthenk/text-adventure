@@ -52,6 +52,8 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
     freely_reachable[start_room] = true;
 
     int spare_keys = 0;
+    bool end_encounter_placed = false;
+    double end_encounter_threshold = 0.7; // until of all the rooms 70% is placed the end encounter can be placed
 
     std::uniform_real_distribution<double> chance(0.0, 1.0);
 
@@ -115,8 +117,16 @@ void MapGenerator::generateRooms(int start_x, int start_y, Room* start_room) {
             if (chance(rng) < 0.2)
                 neighbor_room->encounter = std::make_unique<LunaticEncounter>();
 
-            if (chance(rng) > 0.2)
-                neighbor_room->encounter = std::make_unique<EndEncounter>();
+            double progress = static_cast<double>(created_rooms) / max_amount_of_rooms;
+            if (!end_encounter_placed) {
+                if (progress >= 0.95) {
+                    neighbor_room->encounter = std::make_unique<EndEncounter>();
+                    end_encounter_placed = true;
+                } else if (progress >= end_encounter_threshold && chance(rng) < 0.3) {
+                    neighbor_room->encounter = std::make_unique<EndEncounter>();
+                    end_encounter_placed = true;
+                }
+            }
 
             // Add items
             if (chance(rng) < 0.25) {
