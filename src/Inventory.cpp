@@ -92,3 +92,12 @@ std::map<ItemType, int> Inventory::getItemsForSave() const {
     }
     return items_map;
 }
+
+int Inventory::getAmountOfItemType(ItemType item_type) {
+    int amount = 0;
+    for (auto& item : items) {
+        if (item.first == item_type)
+            amount += item.second.size();
+    }
+    return amount;
+}

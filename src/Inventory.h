@@ -25,9 +25,9 @@ public:
     bool checkIfItemIsAvailable(ItemType item_type);
     string listItems();
     std::map<ItemType, int> getItemsForSave() const;
+    int getAmountOfItemType(ItemType item_type);
 
 private:
-    // TODO: Implement Inventory weight
     int max_weight;
     std::map<ItemType, std::vector<std::unique_ptr<Item>>> items;
 

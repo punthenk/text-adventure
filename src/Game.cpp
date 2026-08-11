@@ -12,6 +12,7 @@
 #include "MapView.h"
 #include "core/Console.h"
 #include "SaveGame.h"
+#include "encounters/EndEncounter.h"
 
 bool Game::finished = false;
 
@@ -115,6 +116,13 @@ void Game::goRoom(Command command) {
     }
 
     if (!next_room->getIsLocked()) {
+        if (dynamic_cast<EndEncounter*>(next_room->encounter.get())) {
+            if (player.backpack.getAmountOfItemType(ItemType::Keycard) < 3) {
+                Console::printWarningLine("You need to have 3 keycards to get in this room.");
+                return;
+            }
+        }
+
         player.setCurrentRoom(next_room);
         player.damage(10);
         if (!player.current_room->getDescription().empty())
