@@ -193,6 +193,15 @@ string Parser::getEndCommandString() {
     return command_strings[0];
 }
 
+string Parser::getEndCommandStringWithTimeout(int seconds) {
+    std::optional<string> command_string = readLineWithTimeout(seconds);
+
+    if (!command_string.has_value()) {
+        return "";
+    }
+
+    return command_string.value();
+}
 
 void Parser::printValidCommands() {
     Console::printInfo("You commands are: ");

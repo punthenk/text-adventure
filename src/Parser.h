@@ -20,6 +20,7 @@ public:
     Command getEndCommand();
     void printValidCommands();
     string getEndCommandString();
+    string getEndCommandStringWithTimeout(int seconds);
 
 private:
     std::vector<string> splitInput(const string& input);

@@ -6,12 +6,14 @@
 #pragma once
 
 #include "Encounter.h"
+#include "Game.h"
 #include "Parser.h"
 
 using std::string;
 
 struct PromtEvent {
     string required_command;
+    string explanation_message;
     string success_message;
     string failure_message;
 };

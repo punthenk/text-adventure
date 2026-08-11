@@ -15,6 +15,7 @@ class Game {
 public:
     Game();
     void play();
+    static bool finished;
 
 private:
     Parser parser;

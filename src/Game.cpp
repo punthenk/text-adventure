@@ -13,6 +13,8 @@
 #include "core/Console.h"
 #include "SaveGame.h"
 
+bool Game::finished = false;
+
 Game::Game() {
     auto save_data = SaveGame::load();
     if (save_data) {
@@ -23,7 +25,6 @@ Game::Game() {
 }
 
 void Game::play() {
-    bool finished = false;
     // printWelcome();
 
     while (!finished && player.isAlive()) {

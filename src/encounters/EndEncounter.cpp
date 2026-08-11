@@ -4,11 +4,13 @@
  */
 
 #include "EndEncounter.h"
-
 #include "Command.h"
 #include "CommandType.h"
+#include "Game.h"
 #include "core/Console.h"
 #include "Player.h"
+
+class Game;
 
 EndEncounter::EndEncounter() { }
 
@@ -46,19 +48,34 @@ void EndEncounter::runRound(Player &player) {
     Console::typeWarningLine("WARNING:");
     Console::typeLine("MANUAL FACILITY OVERRIDE INITIATED.\n");
     Console::typeLine("ESTIMATED TIME TO LOCKDOWN:");
-    Console::typeLine("30 SECONDS\n");
+    Console::typeLine("5 SECONDS\n");
 
     const PromtEvent disable_security_event {
         "disable_security",
+        "You need to disable the security system NOW! Type the command! I know you know it!",
         "SECURITY SYSTEM DISABLED.",
         "INVALID COMMAND.\n\n SECURITY SYSTEM HAS LOCKED YOU OUT.\n\n RETRYING...\n",
     };
 
-    string string_command = parser.getEndCommandString();
+    Console::typeLine(disable_security_event.explanation_message);
+
+    string string_command = parser.getEndCommandStringWithTimeout(5);
     while (string_command.empty() || string_command != disable_security_event.required_command) {
         Console::typeDangerLine(disable_security_event.failure_message);
-        string_command = parser.getEndCommandString();
+        string_command = parser.getEndCommandStringWithTimeout(5);
     }
 
     Console::typeSuccessLine(disable_security_event.success_message);
+
+    Console::typeSuccessLine("You can escape the Facility!");
+    Console::typeLine("Try to escape.");
+    string_command = parser.getEndCommandString();
+    while (string_command.empty() || string_command != "escape") {
+        Console::typeDangerLine("Try again");
+        string_command = parser.getEndCommandString();
+    }
+
+    Console::typeLine("YES! You escaped. Well done! Bye!");
+    Game::finished = true;
+    is_active = false;
 }
