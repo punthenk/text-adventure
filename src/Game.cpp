@@ -26,7 +26,7 @@ Game::Game() {
 }
 
 void Game::play() {
-    // printWelcome();
+    printWelcome();
 
     while (!finished && player.isAlive()) {
         Command command = parser.getCommand();
@@ -50,7 +50,6 @@ void Game::printWelcome() {
     Console::typeLine("To begin, type `help` if you need any help");
     Console::typeLine("You goal is to exit the facility and survive!");
     Console::typeLine("GOOD LUCK!\n");
-    Console::typeLine(player.current_room->getDescription());
 }
 
 void Game::printHelp(Command command) {
