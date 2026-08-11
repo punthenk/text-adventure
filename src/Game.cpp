@@ -38,6 +38,11 @@ void Game::play() {
     Console::typeLine("Bye", 50);
 }
 
+void Game::stop() {
+    SaveGame::deleteSaveFile();
+    exit(0);
+}
+
 void Game::printWelcome() {
     Console::typeLine("Welcome to the text-adventure game 'The Facility'");
     Console::typeLine("This is going to be an incredible !boring game ;)");

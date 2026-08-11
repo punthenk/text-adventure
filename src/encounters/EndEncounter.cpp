@@ -76,6 +76,5 @@ void EndEncounter::runRound(Player &player) {
     }
 
     Console::typeLine("YES! You escaped. Well done! Bye!");
-    Game::finished = true;
-    is_active = false;
+    Game::stop();
 }

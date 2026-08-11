@@ -15,6 +15,7 @@ class Game {
 public:
     Game();
     void play();
+    static void stop();
     static bool finished;
 
 private:
